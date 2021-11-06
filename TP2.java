@@ -1,13 +1,14 @@
 import java.util.Date;
-import java.text.SimpleDateFormat; 
+import java.text.SimpleDateFormat;
+
 /**
  * I N F x 1 2 0
- *
+ * <p>
  * TP1 - Programme de Facturation de Expert-Plancher (v1)
- * 
+ *
  * @author Lilya Benladjreb
  * @version 2021-10-11
- *
+ * <p>
  * BENL28549807
  * benladjreb.lilya@courrier.uqam.ca
  */
@@ -16,17 +17,17 @@ public class TP2 {
 
     // Autres m�thodes s'il y a lieu
 
-    public static void main (String[] params) {
+    public static void main(String[] params) {
 
         //Déclarer et initialiser les constantes
         final int ID_VERNIS_EAU = 101;
         final int ID_VERNIS_HUILE = 102;
-        final int ID_VERNIS_ALCOOL = 103; 
+        final int ID_VERNIS_ALCOOL = 103;
         final int ID_MAT = 1;
         final int ID_SATINE = 2;
         final int ID_SEMI_LUS = 3;
         final int ID_LUS = 4;
-        final String UNITE  = "pied(s) carré";
+        final String UNITE = "pied(s) carré";
 
         // Constantes de prix
         final double PRIX_MARCHE = 30.00;
@@ -76,9 +77,9 @@ public class TP2 {
 
         //Variables client
         String nomClient;
-        String prenomClient; 
-        String telClient; 
-        String adrClient; 
+        String prenomClient;
+        String telClient;
+        String adrClient;
         int choixEau = 0;
         int choixHuile = 0;
         int choixAlcool = 0;
@@ -100,7 +101,7 @@ public class TP2 {
         System.out.println("---------------------------------------------------------------------------------------");
 
         // Afficher le menu 
-        do{
+        do {
             System.out.println("*** Menu de choix ***");
             System.out.println("1. " + CHOIX_MENU_UN);
             System.out.println("2. " + CHOIX_MENU_DEUX);
@@ -117,7 +118,7 @@ public class TP2 {
 
             //option 1
 
-            if(choixMenu == '1'){
+            if (choixMenu == '1') {
                 System.out.print("Entrez le nom du client: ");
                 nomClient = Clavier.lireString();
                 System.out.print("Entrez le prénom du client: ");
@@ -128,76 +129,76 @@ public class TP2 {
                 adrClient = Clavier.lireString();
 
                 numFacture += 1;
-                
-                do{
+
+                do {
                     System.out.printf("Entrez la surface à sabler et à vernir en pieds carré (supérieur à 0) : ");
                     surfacePlancher = Clavier.lireDouble();
 
-                    if(surfacePlancher > 0){
+                    if (surfacePlancher > 0) {
                         valide = true;
-                    }else{
+                    } else {
                         System.out.printf(MSG_ERR);
                     }
-                }while(!valide);
+                } while (!valide);
 
-                do{
+                do {
                     //Saisie du vernis
                     System.out.printf("Entrez l'identifiant du vernis");
-                    System.out.printf(" ("+ ID_VERNIS_EAU + " = " + CHOIX_MENU_VER_EAU +"\n"
-                        + "                                "+ ID_VERNIS_HUILE + " = " + CHOIX_MENU_VER_HUILE + "\n"
-                        + "                                "+ ID_VERNIS_ALCOOL + " = " + CHOIX_MENU_VER_ALCOOL + "):  ");
+                    System.out.printf(" (" + ID_VERNIS_EAU + " = " + CHOIX_MENU_VER_EAU + "\n"
+                            + "                                " + ID_VERNIS_HUILE + " = " + CHOIX_MENU_VER_HUILE + "\n"
+                            + "                                " + ID_VERNIS_ALCOOL + " = " + CHOIX_MENU_VER_ALCOOL + "):  ");
                     identifiantVernis = Clavier.lireInt();
 
-                    if(identifiantVernis<ID_VERNIS_EAU || identifiantVernis>ID_VERNIS_ALCOOL){
+                    if (identifiantVernis < ID_VERNIS_EAU || identifiantVernis > ID_VERNIS_ALCOOL) {
                         System.out.println(MSG_ERR);
                     }
 
-                }while(identifiantVernis<ID_VERNIS_EAU || identifiantVernis>ID_VERNIS_ALCOOL);
+                } while (identifiantVernis < ID_VERNIS_EAU || identifiantVernis > ID_VERNIS_ALCOOL);
 
-                do{
+                do {
                     //Saisie du Finit
-                    System.out.printf("Entrez le type de finition" + "(" + ID_MAT + " = " + FINI_MAT + ", " 
-                        + ID_SATINE + " = " + FINI_SAT + ", "
-                        + ID_SEMI_LUS + " = " + FINI_SEMI_LUS + ", "
-                        + ID_LUS + " = " + FINI_LUS + "): ");
+                    System.out.printf("Entrez le type de finition" + "(" + ID_MAT + " = " + FINI_MAT + ", "
+                            + ID_SATINE + " = " + FINI_SAT + ", "
+                            + ID_SEMI_LUS + " = " + FINI_SEMI_LUS + ", "
+                            + ID_LUS + " = " + FINI_LUS + "): ");
                     typeVernisFinition = Clavier.lireInt();
 
-                    if(typeVernisFinition < ID_MAT || typeVernisFinition > ID_LUS){
+                    if (typeVernisFinition < ID_MAT || typeVernisFinition > ID_LUS) {
                         System.out.println(MSG_ERR);
                     }
 
-                }while(typeVernisFinition < ID_MAT || typeVernisFinition > ID_LUS);
+                } while (typeVernisFinition < ID_MAT || typeVernisFinition > ID_LUS);
 
-                do{
+                do {
                     //Saisie Escalier 
                     System.out.printf("Avez-vous des escaliers à sabler et à vernir (O ou o = Oui, N ou n = Non): ");
                     reponseEscalier = Clavier.lireCharLn();
 
-                    if(reponseEscalier != PETIT_O && reponseEscalier != GRAND_O && reponseEscalier != PETIT_N && reponseEscalier != GRAND_N){
+                    if (reponseEscalier != PETIT_O && reponseEscalier != GRAND_O && reponseEscalier != PETIT_N && reponseEscalier != GRAND_N) {
                         valide = false;
                         System.out.println(MSG_ERR);
                     }
-                }while (!valide);
+                } while (!valide);
 
                 nbrMarches = 0;
                 nbrContreMarches = 0;
 
-                if(reponseEscalier == PETIT_O || reponseEscalier == GRAND_O){
-                    do{    
+                if (reponseEscalier == PETIT_O || reponseEscalier == GRAND_O) {
+                    do {
                         System.out.printf("Entrez le nombre de marches (supérieur à 0): ");
                         nbrMarches = Clavier.lireDouble();
-                        if(nbrMarches <= 0){
+                        if (nbrMarches <= 0) {
                             System.out.printf(MSG_ERR);
                         }
-                    }while(nbrMarches <= 0);
+                    } while (nbrMarches <= 0);
 
-                    do{
+                    do {
                         System.out.print("Entrez le nombre de contremarches (supérieur à 0): ");
                         nbrContreMarches = Clavier.lireDouble();
-                        if(nbrContreMarches <= 0){
+                        if (nbrContreMarches <= 0) {
                             System.out.println(MSG_ERR);
                         }
-                    }while(nbrContreMarches <= 0);
+                    } while (nbrContreMarches <= 0);
                 }
 
                 //Saisie mode paiement
@@ -205,96 +206,96 @@ public class TP2 {
                 modePaiement = ' ';
                 modePaieClient = " ";
 
-                do{
+                do {
                     System.out.printf("Entrez le mode de paiement (C ou c = Comptant, D ou d = Débit, et R et r = Crédit): ");
-                    modePaiement = Clavier.lireCharLn();   
-                    if(modePaiement == 'C' || modePaiement == 'c'){
+                    modePaiement = Clavier.lireCharLn();
+                    if (modePaiement == 'C' || modePaiement == 'c') {
                         //Comptant
                         modePaieClient = "Comptant";
-                    }else if (modePaiement == 'D' || modePaiement == 'd'){
+                    } else if (modePaiement == 'D' || modePaiement == 'd') {
                         //Débit
                         modePaieClient = "Débit";
-                    }else if (modePaiement == 'R' || modePaiement == 'r'){
+                    } else if (modePaiement == 'R' || modePaiement == 'r') {
                         //Crédit
                         modePaieClient = "Crédit";
-                    }else {
+                    } else {
                         //entrée incorecte (message d'erreur)
                         valide = false;
                         System.out.println(MSG_ERR);
                     }
 
-                }while(!valide);
+                } while (!valide);
 
                 //Calculer no Facture pour l'afficher dans menu 1 et pouvoir l'additionner dans menu 3
 
                 //Affichage Date et Heure
                 System.out.println("---------------------------------------------------------------------------------------");
                 System.out.println(NOM_ENTREPRISE);
-                System.out.print(ADR_ENTREPRISE + "     " + TEL_ENTREPRISE + "\n" );
-                System.out.println("Facture No: " + numFacture  + "       Date et Heure: "+ simpleDateFormat.format(dateHeureSysteme));
+                System.out.print(ADR_ENTREPRISE + "     " + TEL_ENTREPRISE + "\n");
+                System.out.println("Facture No: " + numFacture + "       Date et Heure: " + simpleDateFormat.format(dateHeureSysteme));
                 System.out.println("---------------------------------------------------------------------------------------");
 
                 //Affichage info client
                 System.out.printf("Nom et prénom : %s %s       ", nomClient, prenomClient);
-                System.out.println("Téléphone : "+ telClient);
-                System.out.println("Adresse du client : "+ adrClient);
+                System.out.println("Téléphone : " + telClient);
+                System.out.println("Adresse du client : " + adrClient);
 
                 //Afficher choix du client 
                 //type de vernis à appliquer
                 String choixVernisClient;
 
-                if (identifiantVernis == ID_VERNIS_EAU  && typeVernisFinition == ID_MAT ){
+                if (identifiantVernis == ID_VERNIS_EAU && typeVernisFinition == ID_MAT) {
                     choixVernisClient = "Le vernis à base d'eau avec le fini Mat";
                     choixEau = 1;
                     nbrTotalClientsEau += choixEau;
-                }else if (identifiantVernis == ID_VERNIS_EAU && typeVernisFinition == ID_SATINE){
-                    choixVernisClient = "Le vernis à base d'eau avec le fini Satiné"; 
+                } else if (identifiantVernis == ID_VERNIS_EAU && typeVernisFinition == ID_SATINE) {
+                    choixVernisClient = "Le vernis à base d'eau avec le fini Satiné";
                     choixEau = 1;
                     nbrTotalClientsEau += choixEau;
-                }else if (identifiantVernis == ID_VERNIS_EAU && typeVernisFinition == ID_SEMI_LUS){
+                } else if (identifiantVernis == ID_VERNIS_EAU && typeVernisFinition == ID_SEMI_LUS) {
                     choixVernisClient = "Le vernis à base d'eau avec le fini Semi-lustré";
                     choixEau = 1;
                     nbrTotalClientsEau += choixEau;
-                }else if (identifiantVernis == ID_VERNIS_EAU && typeVernisFinition == ID_LUS ){
+                } else if (identifiantVernis == ID_VERNIS_EAU) {
                     choixVernisClient = "Le vernis à base d'eau avec le fini Lustré";
                     choixEau = 1;
                     nbrTotalClientsEau += choixEau;
-                }else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_MAT){
+                } else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_MAT) {
                     choixVernisClient = "Le vernis à base d'huile avec le fini Mat";
                     choixHuile = 1;
                     nbrTotalClientsHuile += choixHuile;
-                }else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_SATINE){
+                } else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_SATINE) {
                     choixVernisClient = "Le vernis à base d'huile avec le fini Satiné";
                     choixHuile = 1;
                     nbrTotalClientsHuile += choixHuile;
-                }else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_SEMI_LUS){
+                } else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_SEMI_LUS) {
                     choixVernisClient = "Le vernis à base d'huile avec le fini Semi-lustré";
                     choixHuile = 1;
                     nbrTotalClientsHuile += choixHuile;
-                }else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_LUS ){
+                } else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_LUS) {
                     choixVernisClient = "Le vernis à base d'huile avec le fini Lustré";
                     choixHuile = 1;
                     nbrTotalClientsEau += choixHuile;
-                }else if (identifiantVernis == ID_VERNIS_ALCOOL && typeVernisFinition == ID_MAT ){
+                } else if (identifiantVernis == ID_VERNIS_ALCOOL && typeVernisFinition == ID_MAT) {
                     choixVernisClient = "Le vernis à l'alcool avec le fini Mat";
                     choixAlcool = 1;
                     nbrTotalClientsAlcool += choixAlcool;
-                }else if (identifiantVernis == ID_VERNIS_ALCOOL && typeVernisFinition == ID_SATINE ){
+                } else if (identifiantVernis == ID_VERNIS_ALCOOL && typeVernisFinition == ID_SATINE) {
                     choixVernisClient = "Le vernis à l'alcool avec le fini Satiné";
                     choixAlcool = 1;
                     nbrTotalClientsAlcool += choixAlcool;
-                }else if (identifiantVernis == ID_VERNIS_ALCOOL && typeVernisFinition == ID_SEMI_LUS ){
+                } else if (identifiantVernis == ID_VERNIS_ALCOOL && typeVernisFinition == ID_SEMI_LUS) {
                     choixVernisClient = "Le vernis à l'alcool avec le fini Semi-lustré";
                     choixAlcool = 1;
                     nbrTotalClientsAlcool += choixAlcool;
-                }else {
-                    choixVernisClient = "Le vernis à l'alcool avec le fini Lustré"; 
+                } else {
+                    choixVernisClient = "Le vernis à l'alcool avec le fini Lustré";
                     choixAlcool = 1;
                     nbrTotalClientsAlcool += choixAlcool;
-                } 
+                }
                 System.out.println("Type de vernis à appliquer : " + choixVernisClient);
 
-                System.out.println("Mode de paiement : "+ modePaieClient + "\n");
+                System.out.println("Mode de paiement : " + modePaieClient + "\n");
 
                 //Calculer les prix et les afficher
                 double prixSurfaceClient;
@@ -304,95 +305,94 @@ public class TP2 {
                 double SousTotalClient;
 
                 //Prix Surface à vernir
-                if(identifiantVernis == ID_VERNIS_EAU && surfacePlancher > 0){
+                if (identifiantVernis == ID_VERNIS_EAU && surfacePlancher > 0) {
                     prixSurfaceClient = surfacePlancher * PRIX_VEAU;
                     prixChoixVClient = PRIX_VEAU;
-                }else if (identifiantVernis == ID_VERNIS_HUILE && surfacePlancher > 0){
-                    prixSurfaceClient = surfacePlancher * PRIX_VHUILE; 
+                } else if (identifiantVernis == ID_VERNIS_HUILE && surfacePlancher > 0) {
+                    prixSurfaceClient = surfacePlancher * PRIX_VHUILE;
                     prixChoixVClient = PRIX_VHUILE;
-                }else {
+                } else {
                     prixSurfaceClient = surfacePlancher * PRIX_VALCOOL;
                     prixChoixVClient = PRIX_VALCOOL;
                 }
-                System.out.printf("Surface à sabler et à vernir     %.2f pied carré x %.2f$ = %.2f$ \n",surfacePlancher,prixChoixVClient,prixSurfaceClient);
+                System.out.printf("Surface à sabler et à vernir     %.2f pied carré x %.2f$ = %.2f$ \n", surfacePlancher, prixChoixVClient, prixSurfaceClient);
 
-                    
+
                 //Prix total
                 double soustotalClient = 0;
                 double montantTps;
                 double montantTvq;
 
                 //Prix des marches et contre-marches 
-                if(reponseEscalier == PETIT_O || reponseEscalier == GRAND_O){
+                if (reponseEscalier == PETIT_O || reponseEscalier == GRAND_O) {
                     prixMarchesClient = nbrMarches * PRIX_MARCHE;
                     prixContreMarchesClient = nbrContreMarches * PRIX_CONMARCHE;
 
-                    System.out.printf("Nombre de marches                %f x %.2f$ = %.2f$ \n",nbrMarches,PRIX_MARCHE,prixMarchesClient);
-                    System.out.printf("Nombre de contremarches          %f x %.2f$ = %.2f$ \n ",nbrContreMarches,PRIX_CONMARCHE,prixContreMarchesClient);
+                    System.out.printf("Nombre de marches                %f x %.2f$ = %.2f$ \n", nbrMarches, PRIX_MARCHE, prixMarchesClient);
+                    System.out.printf("Nombre de contremarches          %f x %.2f$ = %.2f$ \n ", nbrContreMarches, PRIX_CONMARCHE, prixContreMarchesClient);
 
-                    soustotalClient = prixMarchesClient + prixContreMarchesClient ;
+                    soustotalClient = prixMarchesClient + prixContreMarchesClient;
 
                 }
 
-                    
-                soustotalClient += prixSurfaceClient;
-                montantTps = soustotalClient * (TPS/100);
-                montantTvq = soustotalClient * (TVQ/100);
-                montantTotalClient = soustotalClient + montantTps + montantTvq; 
 
-                System.out.printf("Sous-total                      %.2f$\n" , soustotalClient );
-                System.out.printf("Montant TPS                      %.2f$\n" , montantTps );
-                System.out.printf("Montant TVQ                      %.2f$\n" , montantTvq );
-                System.out.printf("Montant total                    %.2f$\n" , montantTotalClient);
+                soustotalClient += prixSurfaceClient;
+                montantTps = soustotalClient * (TPS / 100);
+                montantTvq = soustotalClient * (TVQ / 100);
+                montantTotalClient = soustotalClient + montantTps + montantTvq;
+
+                System.out.printf("Sous-total                      %.2f$\n", soustotalClient);
+                System.out.printf("Montant TPS                      %.2f$\n", montantTps);
+                System.out.printf("Montant TVQ                      %.2f$\n", montantTvq);
+                System.out.printf("Montant total                    %.2f$\n", montantTotalClient);
 
                 System.out.println("        -------------------------------------------------------------------           ");
-                System.out.println("                 " + MSG_FIN );
+                System.out.println("                 " + MSG_FIN);
 
-                montantTotalFactures += montantTotalClient ;
+                montantTotalFactures += montantTotalClient;
 
-            
 
-        }else if (choixMenu == '2') {
-            //Option 2
+            } else if (choixMenu == '2') {
+                //Option 2
 
-            System.out.println("\n-----------------------------------------------------------------------------------------------\n"
-                + NOM_ENTREPRISE + "\n"
+                System.out.println("\n-----------------------------------------------------------------------------------------------\n"
+                        + NOM_ENTREPRISE + "\n"
 
-                +"Date et Heure : " + simpleDateFormat.format(dateHeureSysteme) 
-                +"\n-----------------------------------------------------------------------------------------------\n");
+                        + "Date et Heure : " + simpleDateFormat.format(dateHeureSysteme)
+                        + "\n-----------------------------------------------------------------------------------------------\n");
 
-            //calculer montant total dépensé par les clents
-            System.out.printf("Le montant total de toutes les factures %.2f$",montantTotalFactures);
-            System.out.println("\n-----------------------------------------------------------------------------------------------\n");
+                //calculer montant total dépensé par les clents
+                System.out.printf("Le montant total de toutes les factures %.2f$", montantTotalFactures);
+                System.out.println("\n-----------------------------------------------------------------------------------------------\n");
 
-            //option 3
+                //option 3
 
-        }else if (choixMenu == '3'){
-            System.out.println("\n-----------------------------------------------------------------------------------------------\n"
-                + NOM_ENTREPRISE + "\n"
+            } else if (choixMenu == '3') {
+                System.out.println("\n-----------------------------------------------------------------------------------------------\n"
+                        + NOM_ENTREPRISE + "\n"
 
-                +"Date et Heure : " + simpleDateFormat.format(dateHeureSysteme) 
-                +"\n-----------------------------------------------------------------------------------------------\n");
-                
-            //calculer le nombre de clients par type de vernis
-            ;
+                        + "Date et Heure : " + simpleDateFormat.format(dateHeureSysteme)
+                        + "\n-----------------------------------------------------------------------------------------------\n");
 
-            System.out.println("Type de vernis "+"    Nombre de clients");
-            System.out.println("****************************************\n");
-            System.out.println("Le vernis à base d'eau      " + nbrTotalClientsEau);
-            System.out.println("Le vernis à base d'huile    " + nbrTotalClientsHuile);
-            System.out.println("Le vernis à l'alcool        " + nbrTotalClientsAlcool);
-            System.out.println("\n-----------------------------------------------------------------------------------------------\n");
+                //calculer le nombre de clients par type de vernis
+                ;
 
-        }else if(choixMenu < '1' || choixMenu > '4'){
-            System.out.println(MSG_ERR);
+                System.out.println("Type de vernis " + "    Nombre de clients");
+                System.out.println("****************************************\n");
+                System.out.println("Le vernis à base d'eau      " + nbrTotalClientsEau);
+                System.out.println("Le vernis à base d'huile    " + nbrTotalClientsHuile);
+                System.out.println("Le vernis à l'alcool        " + nbrTotalClientsAlcool);
+                System.out.println("\n-----------------------------------------------------------------------------------------------\n");
 
+            } else if (choixMenu < '1' || choixMenu > '4') {
+                System.out.println(MSG_ERR);
+
+            }
+        } while (choixMenu != '4');
+
+        if (choixMenu == '4') {
+            System.exit(0);
         }
-    }while(choixMenu != '4'); 
 
-    if(choixMenu == '4'){
-        System.exit(0);
-    }
-
-} // main
+    } // main
 } // TP1
