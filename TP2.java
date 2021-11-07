@@ -18,7 +18,159 @@ import java.text.SimpleDateFormat;
 
 public class TP2 {
 
-    // Autres m�thodes s'il y a lieu
+    //Déclarer et initialiser les constantes
+    final int ID_VERNIS_EAU = 101;
+    final int ID_VERNIS_HUILE = 102;
+    final int ID_VERNIS_ALCOOL = 103;
+    final int ID_MAT = 1;
+    final int ID_SATINE = 2;
+    final int ID_SEMI_LUS = 3;
+    final int ID_LUS = 4;
+
+    // Constantes de prix
+    final double PRIX_MARCHE = 30.00;
+    final double PRIX_CONMARCHE = 15.00;
+    final double TPS = 5.00;
+    final float TVQ = 9.975f;
+    final double PRIX_VEAU = 3.50;
+    final double PRIX_VHUILE = 3.75;
+    final double PRIX_VALCOOL = 4.00;
+
+    //Constante de facture
+    static final String NOM_ENTREPRISE = "Expert-Plancher";
+    final String ADR_ENTREPRISE = "2021 boulevard Java, Informatique, QC ";
+    final String TEL_ENTREPRISE = "(438)182-1100";
+
+    //Constantes Messages
+    static final String CHOIX_MENU_UN = "Facturer le sablage et le vernissage de plancher et d'escaliers";
+    static final String CHOIX_MENU_DEUX = "Afficher le montant total de toutes les factures";
+    static final String CHOIX_MENU_TROIS = "Afficher le nombre de clients par type de vernis";
+    static final String CHOIX_MENU_QUATRE = "Quitter le programme";
+    final String CHOIX_MENU_VER_EAU = "Le vernis à base d'eau";
+    final String CHOIX_MENU_VER_HUILE = "Le vernis à base d'huile";
+    final String CHOIX_MENU_VER_ALCOOL = "Le vernis à base d'alcool";
+    final String FINI_MAT = "Mat";
+    final String FINI_SAT = "Satiné";
+    final String FINI_SEMI_LUS = "Semi-lustré";
+    final String FINI_LUS = "Lustré";
+    final String MSG_ERR = "Entrée invalide!\n";
+    final String MSG_FIN = "Merci beaucoup et passez une agréable journée!";
+    final char PETIT_O = 'o';
+    final char GRAND_O = 'O';
+    final char PETIT_N = 'n';
+    final char GRAND_N = 'N';
+
+    //Variables Menu
+    char choixMenu;
+    char modePaiement;
+    char reponseEscalier;
+    int identifiantVernis;
+    int typeVernisFinition;
+    boolean valide = false;
+    static double surfacePlancher;
+    double nbrMarches;
+    double nbrContreMarches;
+    static int nbCar;
+
+    //Variables client
+    String nomClient;
+    String prenomClient;
+    String telClient;
+    String adrClient;
+    int choixEau = 0;
+    int choixHuile = 0;
+    int choixAlcool = 0;
+
+    //Variable factures
+    int numFacture = 0;
+    double montantTotalClient = 0;
+    double montantTotalFactures = 0;
+    int nbrTotalClientsEau = 0;
+    int nbrTotalClientsHuile = 0;
+    int nbrTotalClientsAlcool = 0;
+
+
+    public static void afficherBienvenu() {
+        // Afficher un message de bienvenu + résumé du programme
+        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.println("Bienvenue dans le system de facturation d'" + NOM_ENTREPRISE);
+        System.out.println("Ce programme permet de calculer la facture de sablage, de vernissage de plancher \nselon le prix par pied carré et le type de vernis choisi. Il affiche aussi \nl'historique en calculant les montants des factures crée par les ventes et le nombre \nde clients par type de vernis.");
+        System.out.println("---------------------------------------------------------------------------------------");
+    }
+
+    public static int saisieMenuInitial() {
+        // Afficher les choix de menu + saisie + validation
+        int choixMenu;
+        System.out.println("*** Menu de choix ***");
+        System.out.println("1. " + CHOIX_MENU_UN);
+        System.out.println("2. " + CHOIX_MENU_DEUX);
+        System.out.println("3. " + CHOIX_MENU_TROIS);
+        System.out.println("4. " + CHOIX_MENU_QUATRE + "\n");
+        do {
+            System.out.print("Entrez votre choix : ");
+            choixMenu = Clavier.lireIntLn();
+            if (choixMenu < 1 || choixMenu > 4) {
+                System.out.println("L'option choisie est invalide!");
+            }
+        } while (choixMenu < 1 || choixMenu > 4);
+        return choixMenu;
+    }
+
+
+    public static String saisieNomClient() {
+        // Entrer le nom de famille du Client + validation
+        String nomClient;
+        do {
+            System.out.print("Entrez le nom du client (entre 2 et 25 caractères inclusivement) : ");
+            nomClient = Clavier.lireString();
+            nbCar = nomClient.length();
+            if (nbCar < 2 || nbCar > 25) {
+                System.out.println("Le nom est invalide!");
+            }
+        } while (nbCar < 2 || nbCar > 25);
+        return nomClient;
+    }
+
+    public static String saisiePrenomClient() {
+        // Entrer le prénom du client + validation
+        String prenomClient;
+        do {
+            System.out.print("Entrez le prénom du client (entre 2 et 25 caractères inclusivement): ");
+            prenomClient = Clavier.lireString();
+            nbCar = prenomClient.length();
+            if (nbCar < 2 || nbCar > 25) {
+                System.out.println("Le prénom est invalide!");
+            }
+        } while (nbCar < 2 || nbCar > 25);
+        return prenomClient;
+    }
+
+    public static String saisieAdresseClient() {
+        // Entrer l'adresse du client + validation
+        String adrClient;
+        do {
+            System.out.print("Entrez l'adresse du client (entre 10 et 80 caractères inclusivement): ");
+            adrClient = Clavier.lireString();
+            if (nbCar < 10 || nbCar > 80) {
+                System.out.println("L'adresse du client est invalide!");
+            }
+        } while (nbCar < 10 || nbCar > 80);
+        return adrClient;
+    }
+
+    public static double saisieSurfacePlancher() {
+        // Entrer la surface du plancher + validation
+        double surfacePlancher;
+        do {
+            System.out.print("Entrez la surface à sabler et à vernir en pieds carré (supérieur à 0) : ");
+            surfacePlancher = Clavier.lireDouble();
+
+            if (surfacePlancher < 0) {
+                System.out.print("La surface est invalide");
+            }
+        } while (surfacePlancher < 0);
+        return surfacePlancher;
+    }
 
     public static void main(String[] params) {
 
@@ -30,7 +182,6 @@ public class TP2 {
         final int ID_SATINE = 2;
         final int ID_SEMI_LUS = 3;
         final int ID_LUS = 4;
-        final String UNITE = "pied(s) carré";
 
         // Constantes de prix
         final double PRIX_MARCHE = 30.00;
@@ -47,9 +198,6 @@ public class TP2 {
         final String TEL_ENTREPRISE = "(438)182-1100";
 
         //Constantes Messages
-        final String CHOIX_MENU_UN = "Facturer le sablage et le vernissage de plancher et d'escaliers";
-        final String CHOIX_MENU_DEUX = "Afficher le montant total de toutes les factures";
-        final String CHOIX_MENU_TROIS = "Afficher le nombre de clients par type de vernis";
         final String CHOIX_MENU_VER_EAU = "Le vernis à base d'eau";
         final String CHOIX_MENU_VER_HUILE = "Le vernis à base d'huile";
         final String CHOIX_MENU_VER_ALCOOL = "Le vernis à base d'alcool";
@@ -57,7 +205,6 @@ public class TP2 {
         final String FINI_SAT = "Satiné";
         final String FINI_SEMI_LUS = "Semi-lustré";
         final String FINI_LUS = "Lustré";
-        final String CHOIX_MENU_QUATRE = "Quitter le programme";
         final String MSG_ERR = "Entrée invalide!\n";
         final String MSG_FIN = "Merci beaucoup et passez une agréable journée!";
         final char PETIT_O = 'o';
@@ -66,13 +213,12 @@ public class TP2 {
         final char GRAND_N = 'N';
 
         //Variables Menu
-        char choixMenu;
+        int choixMenu;
         char modePaiement;
         char reponseEscalier;
         int identifiantVernis;
         int typeVernisFinition;
         boolean valide = false;
-        double surfacePlancher;
         double nbrMarches;
         double nbrContreMarches;
 
@@ -93,23 +239,14 @@ public class TP2 {
         int nbrTotalClientsHuile = 0;
         int nbrTotalClientsAlcool = 0;
 
-        // Affichicher un message de bienvenu + résumé du programme
-        System.out.println("---------------------------------------------------------------------------------------");
-        System.out.println("Bienvenue dans le system de facturation d'" + NOM_ENTREPRISE);
-        System.out.println("Ce programme permet de calculer la facture de sablage, de vernissage de plancher \nselon le prix par pied carré et le type de vernis choisi. Il affiche aussi \nl'historique en calculant les montants des factures crée par les ventes et le nombre \nde clients par type de vernis.");
-        System.out.println("---------------------------------------------------------------------------------------");
+
+        afficherBienvenu();
+
 
         // Afficher le menu 
         do {
-            System.out.println("*** Menu de choix ***");
-            System.out.println("1. " + CHOIX_MENU_UN);
-            System.out.println("2. " + CHOIX_MENU_DEUX);
-            System.out.println("3. " + CHOIX_MENU_TROIS);
-            System.out.println("4. " + CHOIX_MENU_QUATRE + "\n");
 
-            //Exécution des choix: 
-            System.out.print("Entrez votre choix : ");
-            choixMenu = Clavier.lireCharLn();
+            choixMenu = saisieMenuInitial();
 
             //Déclaration de la date et l'heure
             Date dateHeureSysteme = new Date();
@@ -117,28 +254,16 @@ public class TP2 {
 
             //option 1
 
-            if (choixMenu == '1') {
-                System.out.print("Entrez le nom du client: ");
-                nomClient = Clavier.lireString();
-                System.out.print("Entrez le prénom du client: ");
-                prenomClient = Clavier.lireString();
+            if (choixMenu == 1) {
+                nomClient = saisieNomClient();
+                prenomClient = saisiePrenomClient();
                 System.out.print("Entrez le numéro de téléphone du client: ");
                 telClient = Clavier.lireString();
-                System.out.print("Entrez l'adresse du client: ");
-                adrClient = Clavier.lireString();
+                adrClient = saisieAdresseClient();
 
                 numFacture += 1;
 
-                do {
-                    System.out.print("Entrez la surface à sabler et à vernir en pieds carré (supérieur à 0) : ");
-                    surfacePlancher = Clavier.lireDouble();
-
-                    if (surfacePlancher > 0) {
-                        valide = true;
-                    } else {
-                        System.out.print(MSG_ERR);
-                    }
-                } while (!valide);
+                saisieSurfacePlancher();
 
                 do {
                     //Saisie du vernis
@@ -340,7 +465,7 @@ public class TP2 {
                 montantTotalFactures += montantTotalClient;
 
 
-            } else if (choixMenu == '2') {
+            } else if (choixMenu == 2) {
                 //Option 2
 
                 System.out.println("\n-----------------------------------------------------------------------------------------------\n"
@@ -355,7 +480,7 @@ public class TP2 {
 
                 //option 3
 
-            } else if (choixMenu == '3') {
+            } else if (choixMenu == 3) {
                 System.out.println("\n-----------------------------------------------------------------------------------------------\n"
                         + NOM_ENTREPRISE + "\n"
 
@@ -372,11 +497,11 @@ public class TP2 {
                 System.out.println("Le vernis à l'alcool        " + nbrTotalClientsAlcool);
                 System.out.println("\n-----------------------------------------------------------------------------------------------\n");
 
-            } else if (choixMenu < '1' || choixMenu > '4') {
+            } else if (choixMenu < 1 || choixMenu > 4) {
                 System.out.println(MSG_ERR);
 
             }
-        } while (choixMenu != '4');
+        } while (choixMenu != 4);
 
         System.exit(0);
 
