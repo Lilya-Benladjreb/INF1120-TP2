@@ -75,8 +75,6 @@ public class TP2 {
         double surfacePlancher;
         double nbrMarches;
         double nbrContreMarches;
-        double prixTotPlancher;
-        double prixTotMarches;
 
         //Variables client
         String nomClient;
@@ -89,8 +87,6 @@ public class TP2 {
 
         //Variable factures
         int numFacture = 0;
-        String dateFacture;
-        String heureFacture;
         double montantTotalClient = 0;
         double montantTotalFactures = 0;
         int nbrTotalClientsEau = 0;
@@ -206,7 +202,6 @@ public class TP2 {
 
                 //Saisie mode paiement
                 String modePaieClient;
-                modePaiement = ' ';
                 modePaieClient = " ";
 
                 do {
@@ -247,54 +242,45 @@ public class TP2 {
                 //type de vernis à appliquer
                 String choixVernisClient;
 
-                if (identifiantVernis == ID_VERNIS_EAU && typeVernisFinition == ID_MAT) {
-                    choixVernisClient = "Le vernis à base d'eau avec le fini Mat";
+                if (identifiantVernis == ID_VERNIS_EAU) {
                     choixEau = 1;
                     nbrTotalClientsEau += choixEau;
-                } else if (identifiantVernis == ID_VERNIS_EAU && typeVernisFinition == ID_SATINE) {
-                    choixVernisClient = "Le vernis à base d'eau avec le fini Satiné";
-                    choixEau = 1;
-                    nbrTotalClientsEau += choixEau;
-                } else if (identifiantVernis == ID_VERNIS_EAU && typeVernisFinition == ID_SEMI_LUS) {
-                    choixVernisClient = "Le vernis à base d'eau avec le fini Semi-lustré";
-                    choixEau = 1;
-                    nbrTotalClientsEau += choixEau;
-                } else if (identifiantVernis == ID_VERNIS_EAU) {
-                    choixVernisClient = "Le vernis à base d'eau avec le fini Lustré";
-                    choixEau = 1;
-                    nbrTotalClientsEau += choixEau;
-                } else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_MAT) {
-                    choixVernisClient = "Le vernis à base d'huile avec le fini Mat";
-                    choixHuile = 1;
-                    nbrTotalClientsHuile += choixHuile;
-                } else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_SATINE) {
-                    choixVernisClient = "Le vernis à base d'huile avec le fini Satiné";
-                    choixHuile = 1;
-                    nbrTotalClientsHuile += choixHuile;
-                } else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_SEMI_LUS) {
-                    choixVernisClient = "Le vernis à base d'huile avec le fini Semi-lustré";
-                    choixHuile = 1;
-                    nbrTotalClientsHuile += choixHuile;
+
+                    if (typeVernisFinition == ID_MAT) {
+                        choixVernisClient = "Le vernis à base d'eau avec le fini Mat";
+                    } else if (typeVernisFinition == ID_SATINE) {
+                        choixVernisClient = "Le vernis à base d'eau avec le fini Satiné";
+                    } else if (typeVernisFinition == ID_SEMI_LUS) {
+                        choixVernisClient = "Le vernis à base d'eau avec le fini Semi-lustré";
+                    } else {
+                        choixVernisClient = "Le vernis à base d'eau avec le fini Lustré";
+                    }
+
                 } else if (identifiantVernis == ID_VERNIS_HUILE) {
-                    choixVernisClient = "Le vernis à base d'huile avec le fini Lustré";
                     choixHuile = 1;
-                    nbrTotalClientsEau += choixHuile;
-                } else if (typeVernisFinition == ID_MAT) {
-                    choixVernisClient = "Le vernis à l'alcool avec le fini Mat";
-                    choixAlcool = 1;
-                    nbrTotalClientsAlcool += choixAlcool;
-                } else if (typeVernisFinition == ID_SATINE) {
-                    choixVernisClient = "Le vernis à l'alcool avec le fini Satiné";
-                    choixAlcool = 1;
-                    nbrTotalClientsAlcool += choixAlcool;
-                } else if (typeVernisFinition == ID_SEMI_LUS) {
-                    choixVernisClient = "Le vernis à l'alcool avec le fini Semi-lustré";
-                    choixAlcool = 1;
-                    nbrTotalClientsAlcool += choixAlcool;
+                    nbrTotalClientsHuile += choixHuile;
+                    if (typeVernisFinition == ID_MAT) {
+                        choixVernisClient = "Le vernis à base d'huile avec le fini Mat";
+                    } else if (typeVernisFinition == ID_SATINE) {
+                        choixVernisClient = "Le vernis à base d'huile avec le fini Satiné";
+                    } else if (typeVernisFinition == ID_SEMI_LUS) {
+                        choixVernisClient = "Le vernis à base d'huile avec le fini Semi-lustré";
+                    } else {
+                        choixVernisClient = "Le vernis à base d'huile avec le fini Lustré";
+                    }
+
                 } else {
-                    choixVernisClient = "Le vernis à l'alcool avec le fini Lustré";
                     choixAlcool = 1;
                     nbrTotalClientsAlcool += choixAlcool;
+                    if (typeVernisFinition == ID_MAT) {
+                        choixVernisClient = "Le vernis à base d'alcool avec le fini Mat";
+                    } else if (typeVernisFinition == ID_SATINE) {
+                        choixVernisClient = "Le vernis à base d'alcool avec le fini Satiné";
+                    } else if (typeVernisFinition == ID_SEMI_LUS) {
+                        choixVernisClient = "Le vernis à base d'alcool avec le fini Semi-lustré";
+                    } else {
+                        choixVernisClient = "Le vernis à base d'alcool avec le fini Lustré";
+                    }
                 }
                 System.out.println("Type de vernis à appliquer : " + choixVernisClient);
 
@@ -302,23 +288,22 @@ public class TP2 {
 
                 //Calculer les prix et les afficher
                 double prixSurfaceClient;
-                double prixChoixVClient;
+                double prixChoixVernisClient;
                 double prixMarchesClient;
                 double prixContreMarchesClient;
-                double SousTotalClient;
 
                 //Prix Surface à vernir
                 if (identifiantVernis == ID_VERNIS_EAU && surfacePlancher > 0) {
                     prixSurfaceClient = surfacePlancher * PRIX_VEAU;
-                    prixChoixVClient = PRIX_VEAU;
+                    prixChoixVernisClient = PRIX_VEAU;
                 } else if (identifiantVernis == ID_VERNIS_HUILE && surfacePlancher > 0) {
                     prixSurfaceClient = surfacePlancher * PRIX_VHUILE;
-                    prixChoixVClient = PRIX_VHUILE;
+                    prixChoixVernisClient = PRIX_VHUILE;
                 } else {
                     prixSurfaceClient = surfacePlancher * PRIX_VALCOOL;
-                    prixChoixVClient = PRIX_VALCOOL;
+                    prixChoixVernisClient = PRIX_VALCOOL;
                 }
-                System.out.printf("Surface à sabler et à vernir     %.2f pied carré x %.2f$ = %.2f$ \n", surfacePlancher, prixChoixVClient, prixSurfaceClient);
+                System.out.printf("Surface à sabler et à vernir     %.2f pied carré x %.2f$ = %.2f$ \n", surfacePlancher, prixChoixVernisClient, prixSurfaceClient);
 
 
                 //Prix total
