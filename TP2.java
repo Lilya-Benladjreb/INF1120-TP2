@@ -4,13 +4,16 @@ import java.text.SimpleDateFormat;
 /**
  * I N F x 1 2 0
  * <p>
- * TP1 - Programme de Facturation de Expert-Plancher (v1)
+ * TP2 - Programme de Facturation de Expert-Plancher (v2)
  *
  * @author Lilya Benladjreb
  * @version 2021-10-11
  * <p>
  * BENL28549807
  * benladjreb.lilya@courrier.uqam.ca
+ * Description du programme: Ce programme sert à facturer les clients de la compagnie d'Expert-Plancher. Elle a un menu
+ * interractif qui (option 1) s'occupe de la sélection des produits, (option 2) de l'affichage de la facture et
+ * (option 3) de l'historique de la compagnie. Finalement, l'option 4 sert à sortir du programme de facturation.
  */
 
 public class TP2 {
@@ -131,20 +134,20 @@ public class TP2 {
                 numFacture += 1;
 
                 do {
-                    System.out.printf("Entrez la surface à sabler et à vernir en pieds carré (supérieur à 0) : ");
+                    System.out.print("Entrez la surface à sabler et à vernir en pieds carré (supérieur à 0) : ");
                     surfacePlancher = Clavier.lireDouble();
 
                     if (surfacePlancher > 0) {
                         valide = true;
                     } else {
-                        System.out.printf(MSG_ERR);
+                        System.out.print(MSG_ERR);
                     }
                 } while (!valide);
 
                 do {
                     //Saisie du vernis
-                    System.out.printf("Entrez l'identifiant du vernis");
-                    System.out.printf(" (" + ID_VERNIS_EAU + " = " + CHOIX_MENU_VER_EAU + "\n"
+                    System.out.print("Entrez l'identifiant du vernis");
+                    System.out.print(" (" + ID_VERNIS_EAU + " = " + CHOIX_MENU_VER_EAU + "\n"
                             + "                                " + ID_VERNIS_HUILE + " = " + CHOIX_MENU_VER_HUILE + "\n"
                             + "                                " + ID_VERNIS_ALCOOL + " = " + CHOIX_MENU_VER_ALCOOL + "):  ");
                     identifiantVernis = Clavier.lireInt();
@@ -157,7 +160,7 @@ public class TP2 {
 
                 do {
                     //Saisie du Finit
-                    System.out.printf("Entrez le type de finition" + "(" + ID_MAT + " = " + FINI_MAT + ", "
+                    System.out.print("Entrez le type de finition" + "(" + ID_MAT + " = " + FINI_MAT + ", "
                             + ID_SATINE + " = " + FINI_SAT + ", "
                             + ID_SEMI_LUS + " = " + FINI_SEMI_LUS + ", "
                             + ID_LUS + " = " + FINI_LUS + "): ");
@@ -171,7 +174,7 @@ public class TP2 {
 
                 do {
                     //Saisie Escalier 
-                    System.out.printf("Avez-vous des escaliers à sabler et à vernir (O ou o = Oui, N ou n = Non): ");
+                    System.out.print("Avez-vous des escaliers à sabler et à vernir (O ou o = Oui, N ou n = Non): ");
                     reponseEscalier = Clavier.lireCharLn();
 
                     if (reponseEscalier != PETIT_O && reponseEscalier != GRAND_O && reponseEscalier != PETIT_N && reponseEscalier != GRAND_N) {
@@ -185,10 +188,10 @@ public class TP2 {
 
                 if (reponseEscalier == PETIT_O || reponseEscalier == GRAND_O) {
                     do {
-                        System.out.printf("Entrez le nombre de marches (supérieur à 0): ");
+                        System.out.print("Entrez le nombre de marches (supérieur à 0): ");
                         nbrMarches = Clavier.lireDouble();
                         if (nbrMarches <= 0) {
-                            System.out.printf(MSG_ERR);
+                            System.out.print(MSG_ERR);
                         }
                     } while (nbrMarches <= 0);
 
@@ -207,7 +210,7 @@ public class TP2 {
                 modePaieClient = " ";
 
                 do {
-                    System.out.printf("Entrez le mode de paiement (C ou c = Comptant, D ou d = Débit, et R et r = Crédit): ");
+                    System.out.print("Entrez le mode de paiement (C ou c = Comptant, D ou d = Débit, et R et r = Crédit): ");
                     modePaiement = Clavier.lireCharLn();
                     if (modePaiement == 'C' || modePaiement == 'c') {
                         //Comptant
@@ -272,19 +275,19 @@ public class TP2 {
                     choixVernisClient = "Le vernis à base d'huile avec le fini Semi-lustré";
                     choixHuile = 1;
                     nbrTotalClientsHuile += choixHuile;
-                } else if (identifiantVernis == ID_VERNIS_HUILE && typeVernisFinition == ID_LUS) {
+                } else if (identifiantVernis == ID_VERNIS_HUILE) {
                     choixVernisClient = "Le vernis à base d'huile avec le fini Lustré";
                     choixHuile = 1;
                     nbrTotalClientsEau += choixHuile;
-                } else if (identifiantVernis == ID_VERNIS_ALCOOL && typeVernisFinition == ID_MAT) {
+                } else if (typeVernisFinition == ID_MAT) {
                     choixVernisClient = "Le vernis à l'alcool avec le fini Mat";
                     choixAlcool = 1;
                     nbrTotalClientsAlcool += choixAlcool;
-                } else if (identifiantVernis == ID_VERNIS_ALCOOL && typeVernisFinition == ID_SATINE) {
+                } else if (typeVernisFinition == ID_SATINE) {
                     choixVernisClient = "Le vernis à l'alcool avec le fini Satiné";
                     choixAlcool = 1;
                     nbrTotalClientsAlcool += choixAlcool;
-                } else if (identifiantVernis == ID_VERNIS_ALCOOL && typeVernisFinition == ID_SEMI_LUS) {
+                } else if (typeVernisFinition == ID_SEMI_LUS) {
                     choixVernisClient = "Le vernis à l'alcool avec le fini Semi-lustré";
                     choixAlcool = 1;
                     nbrTotalClientsAlcool += choixAlcool;
@@ -390,9 +393,7 @@ public class TP2 {
             }
         } while (choixMenu != '4');
 
-        if (choixMenu == '4') {
-            System.exit(0);
-        }
+        System.exit(0);
 
     } // main
 } // TP1
