@@ -3,16 +3,16 @@ import java.util.Date;
 
 /**
  * I N F x 1 2 0
- *
+ * <p>
  * TP2 - Programme de Facturation de Expert-Plancher (v2)
- *
+ * <p>
  * Description du programme: Ce programme sert à facturer les clients de la compagnie d'Expert-Plancher. Elle a un menu
  * interractif qui (option 1) s'occupe de la sélection des produits, (option 2) de l'affichage de la facture et
  * (option 3) de l'historique de la compagnie. Finalement, l'option 4 sert à sortir du programme de facturation.
  *
  * @author Lilya Benladjreb
  * @version 2021-10-11
- *
+ * <p>
  * BENL28549807
  * benladjreb.lilya@courrier.uqam.ca
  */
@@ -54,7 +54,6 @@ public class TP2 {
     static final String FINI_SAT = "Satiné";
     static final String FINI_SEMI_LUS = "Semi-lustré";
     static final String FINI_LUS = "Lustré";
-    static final String MSG_ERR = "Entrée invalide!\n";
     final String MSG_FIN = "Merci beaucoup et passez une agréable journée!";
     final char PETIT_O = 'o';
     final char GRAND_O = 'O';
@@ -71,6 +70,11 @@ public class TP2 {
     double nbrMarches;
     double nbrContreMarches;
     static int nbCar;
+    static String input;
+    static int min;
+    static int max;
+    static int longueurString;
+
 
     //Variables client
     static String nomClient;
@@ -146,15 +150,14 @@ public class TP2 {
     public static String saisieNumTelClient() {
         // Entrer un numéro de telephone, verifier si non-vide, verifier format NNN NNN-NNNN
         String numTelClientValidation;
+
         do {
             System.out.print("Entrez le numéro de téléphone du client (format : NNN NNN-NNNN): ");
             telClient = Clavier.lireString();
             numTelClientValidation = telClient.trim();
             nbCar = numTelClientValidation.length();
-            if (nbCar < 1) {
-                System.out.println("Le numéro de téléphone est invalide!");
 
-            } else if (!(telClient.matches("^[\\d]{3}\\s[\\d]{3}-[\\d]{4}$"))) {
+            if (!(telClient.matches("^[\\d]{3}\\s[\\d]{3}-[\\d]{4}$"))) {
                 System.out.println("Le numéro de téléphone est invalide!");
             }
 
@@ -187,7 +190,7 @@ public class TP2 {
         return surfacePlancher;
     }
 
-    public static int saisieIdentifiantVernis(){
+    public static int saisieIdentifiantVernis() {
         do {
             //Saisie et validation du vernis
             System.out.print("Entrez l'identifiant du vernis");
@@ -205,8 +208,8 @@ public class TP2 {
         return identifiantVernis;
     }
 
-    public static int saisieTypeVernisFinition(){
-        do{
+    public static int saisieTypeVernisFinition() {
+        do {
             //Saisie du Finit
             System.out.print("Entrez le type de finition" + "(" + ID_MAT + " = " + FINI_MAT + ", "
                     + ID_SATINE + " = " + FINI_SAT + ", "
