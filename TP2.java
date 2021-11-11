@@ -55,15 +55,15 @@ public class TP2 {
     static final String FINI_SEMI_LUS = "Semi-lustré";
     static final String FINI_LUS = "Lustré";
     final String MSG_FIN = "Merci beaucoup et passez une agréable journée!";
-    final char PETIT_O = 'o';
-    final char GRAND_O = 'O';
-    final char PETIT_N = 'n';
-    final char GRAND_N = 'N';
+    static final char PETIT_O = 'o';
+    static final char GRAND_O = 'O';
+    static final char PETIT_N = 'n';
+    static final char GRAND_N = 'N';
 
     //Variables Menu
-    char choixMenu;
-    char modePaiement;
-    char reponseEscalier;
+    static int choixMenu;
+    static char modePaiement;
+    static char reponseEscalier;
     static int identifiantVernis;
     static int typeVernisFinition;
     static double surfacePlancher;
@@ -71,9 +71,7 @@ public class TP2 {
     double nbrContreMarches;
     static int nbCar;
     static String input;
-    static int min;
-    static int max;
-    static int longueurString;
+    static String inputTrimmed;
 
 
     //Variables client
@@ -104,7 +102,6 @@ public class TP2 {
 
     public static int saisieMenuInitial() {
         // Afficher les choix de menu + saisie + validation
-        int choixMenu;
         System.out.println("*** Menu de choix ***");
         System.out.println("1. " + CHOIX_MENU_UN);
         System.out.println("2. " + CHOIX_MENU_DEUX);
@@ -123,10 +120,13 @@ public class TP2 {
 
     public static String saisieNomClient() {
         // Entrer le nom de famille du Client + validation
+
         do {
             System.out.print("Entrez le nom du client (entre 2 et 25 caractères inclusivement) : ");
             nomClient = Clavier.lireString();
-            nbCar = nomClient.length();
+            inputTrimmed = nomClient.trim();
+            nbCar = inputTrimmed.length();
+
             if (nbCar < 2 || nbCar > 25) {
                 System.out.println("Le nom est invalide!");
             }
@@ -139,7 +139,9 @@ public class TP2 {
         do {
             System.out.print("Entrez le prénom du client (entre 2 et 25 caractères inclusivement): ");
             prenomClient = Clavier.lireString();
-            nbCar = prenomClient.length();
+            inputTrimmed = prenomClient.trim();
+            nbCar = inputTrimmed.length();
+
             if (nbCar < 2 || nbCar > 25) {
                 System.out.println("Le prénom est invalide!");
             }
@@ -149,13 +151,11 @@ public class TP2 {
 
     public static String saisieNumTelClient() {
         // Entrer un numéro de telephone, verifier si non-vide, verifier format NNN NNN-NNNN
-        String numTelClientValidation;
-
         do {
             System.out.print("Entrez le numéro de téléphone du client (format : NNN NNN-NNNN): ");
             telClient = Clavier.lireString();
-            numTelClientValidation = telClient.trim();
-            nbCar = numTelClientValidation.length();
+            inputTrimmed = telClient.trim();
+            nbCar = inputTrimmed.length();
 
             if (!(telClient.matches("^[\\d]{3}\\s[\\d]{3}-[\\d]{4}$"))) {
                 System.out.println("Le numéro de téléphone est invalide!");
@@ -170,6 +170,9 @@ public class TP2 {
         do {
             System.out.print("Entrez l'adresse du client (entre 10 et 80 caractères inclusivement): ");
             adrClient = Clavier.lireString();
+            inputTrimmed = adrClient.trim();
+            nbCar = inputTrimmed.length();
+
             if (nbCar < 10 || nbCar > 80) {
                 System.out.println("L'adresse du client est invalide!");
             }
@@ -183,10 +186,10 @@ public class TP2 {
             System.out.print("Entrez la surface à sabler et à vernir en pieds carré (supérieur à 0) : ");
             surfacePlancher = Clavier.lireDouble();
 
-            if (surfacePlancher < 0) {
+            if (surfacePlancher <= 0) {
                 System.out.print("La surface est invalide");
             }
-        } while (surfacePlancher < 0);
+        } while (surfacePlancher <= 0);
         return surfacePlancher;
     }
 
@@ -226,6 +229,20 @@ public class TP2 {
         return typeVernisFinition;
     }
 
+    public static char saisieQuestionEscalier(){
+        do {
+            //Saisie Escalier
+            System.out.print("Avez-vous des escaliers à sabler et à vernir? (O ou o = Oui, N ou n = Non): ");
+            reponseEscalier = Clavier.lireCharLn();
+
+            if (reponseEscalier != PETIT_O && reponseEscalier != GRAND_O && reponseEscalier != PETIT_N && reponseEscalier != GRAND_N) {
+                System.out.println("La réponse est invalide!");
+            }
+        } while (reponseEscalier != PETIT_O && reponseEscalier != GRAND_O && reponseEscalier != PETIT_N && reponseEscalier != GRAND_N);
+
+        return reponseEscalier;
+    }
+
     public static void main(String[] params) {
 
         //Déclarer et initialiser les constantes
@@ -252,21 +269,10 @@ public class TP2 {
         final String TEL_ENTREPRISE = "(438)182-1100";
 
         //Constantes Messages
-        final String FINI_MAT = "Mat";
-        final String FINI_SAT = "Satiné";
-        final String FINI_SEMI_LUS = "Semi-lustré";
-        final String FINI_LUS = "Lustré";
         final String MSG_ERR = "Entrée invalide!\n";
         final String MSG_FIN = "Merci beaucoup et passez une agréable journée!";
-        final char PETIT_O = 'o';
-        final char GRAND_O = 'O';
-        final char PETIT_N = 'n';
-        final char GRAND_N = 'N';
 
         //Variables Menu
-        int choixMenu;
-        char modePaiement;
-        char reponseEscalier;
         double nbrMarches;
         double nbrContreMarches;
 
@@ -316,16 +322,7 @@ public class TP2 {
 
                 typeVernisFinition = saisieTypeVernisFinition();
 
-                do {
-                    //Saisie Escalier
-                    System.out.print("Avez-vous des escaliers à sabler et à vernir (O ou o = Oui, N ou n = Non): ");
-                    reponseEscalier = Clavier.lireCharLn();
-
-                    if (reponseEscalier != PETIT_O && reponseEscalier != GRAND_O && reponseEscalier != PETIT_N && reponseEscalier != GRAND_N) {
-                        System.out.println(MSG_ERR);
-                    }
-                } while (reponseEscalier != PETIT_O && reponseEscalier != GRAND_O && reponseEscalier != PETIT_N && reponseEscalier != GRAND_N);
-
+                reponseEscalier = saisieQuestionEscalier();
 
                 nbrMarches = 0;
                 nbrContreMarches = 0;
@@ -369,7 +366,7 @@ public class TP2 {
                         System.out.println(MSG_ERR);
                     }
 
-                } while (modePaiement != 'C' || modePaiement != 'c' || modePaiement != 'D' || modePaiement != 'd' || modePaiement != 'R' || modePaiement != 'r');
+                } while (modePaiement != 'C' && modePaiement != 'c' && modePaiement != 'D' && modePaiement != 'd' && modePaiement != 'R' && modePaiement != 'r');
 
                 //Calculer no Facture pour l'afficher dans menu 1 et pouvoir l'additionner dans menu 3
 
@@ -463,8 +460,8 @@ public class TP2 {
                     prixMarchesClient = nbrMarches * PRIX_MARCHE;
                     prixContreMarchesClient = nbrContreMarches * PRIX_CONMARCHE;
 
-                    System.out.printf("Nombre de marches                %f x %.2f$ = %.2f$ \n", nbrMarches, PRIX_MARCHE, prixMarchesClient);
-                    System.out.printf("Nombre de contremarches          %f x %.2f$ = %.2f$ \n ", nbrContreMarches, PRIX_CONMARCHE, prixContreMarchesClient);
+                    System.out.printf("Nombre de marches                %.2f x %.2f$ = %.2f$ \n", nbrMarches, PRIX_MARCHE, prixMarchesClient);
+                    System.out.printf("Nombre de contremarches          %.2f x %.2f$ = %.2f$ \n ", nbrContreMarches, PRIX_CONMARCHE, prixContreMarchesClient);
 
                     soustotalClient = prixMarchesClient + prixContreMarchesClient;
 
