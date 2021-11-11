@@ -54,6 +54,7 @@ public class TP2 {
     static final String FINI_SAT = "Satiné";
     static final String FINI_SEMI_LUS = "Semi-lustré";
     static final String FINI_LUS = "Lustré";
+    static final String MSG_ERR = "est invalide!";
     final String MSG_FIN = "Merci beaucoup et passez une agréable journée!";
     static final char PETIT_O = 'o';
     static final char GRAND_O = 'O';
@@ -67,10 +68,9 @@ public class TP2 {
     static int identifiantVernis;
     static int typeVernisFinition;
     static double surfacePlancher;
-    double nbrMarches;
-    double nbrContreMarches;
+    static double nbrMarches;
+    static double nbrContreMarches;
     static int nbCar;
-    static String input;
     static String inputTrimmed;
 
 
@@ -79,6 +79,7 @@ public class TP2 {
     static String prenomClient;
     static String telClient;
     static String adrClient;
+    static String modePaieClient;
     int choixEau = 0;
     int choixHuile = 0;
     int choixAlcool = 0;
@@ -111,7 +112,7 @@ public class TP2 {
             System.out.print("Entrez votre choix : ");
             choixMenu = Clavier.lireIntLn();
             if (choixMenu < 1 || choixMenu > 4) {
-                System.out.println("L'option choisie est invalide!");
+                System.out.println("L'option choisie " + MSG_ERR);
             }
         } while (choixMenu < 1 || choixMenu > 4);
         return choixMenu;
@@ -128,7 +129,7 @@ public class TP2 {
             nbCar = inputTrimmed.length();
 
             if (nbCar < 2 || nbCar > 25) {
-                System.out.println("Le nom est invalide!");
+                System.out.println("Le nom " + MSG_ERR);
             }
         } while (nbCar < 2 || nbCar > 25);
         return nomClient;
@@ -143,7 +144,7 @@ public class TP2 {
             nbCar = inputTrimmed.length();
 
             if (nbCar < 2 || nbCar > 25) {
-                System.out.println("Le prénom est invalide!");
+                System.out.println("Le prénom " + MSG_ERR);
             }
         } while (nbCar < 2 || nbCar > 25);
         return prenomClient;
@@ -158,7 +159,7 @@ public class TP2 {
             nbCar = inputTrimmed.length();
 
             if (!(telClient.matches("^[\\d]{3}\\s[\\d]{3}-[\\d]{4}$"))) {
-                System.out.println("Le numéro de téléphone est invalide!");
+                System.out.println("Le numéro de téléphone " + MSG_ERR);
             }
 
         } while (nbCar < 1 || !(telClient.matches("^[\\d]{3}\\s[\\d]{3}-[\\d]{4}$")));
@@ -174,7 +175,7 @@ public class TP2 {
             nbCar = inputTrimmed.length();
 
             if (nbCar < 10 || nbCar > 80) {
-                System.out.println("L'adresse du client est invalide!");
+                System.out.println("L'adresse du client " + MSG_ERR);
             }
         } while (nbCar < 10 || nbCar > 80);
         return adrClient;
@@ -184,10 +185,10 @@ public class TP2 {
         // Entrer la surface du plancher + validation
         do {
             System.out.print("Entrez la surface à sabler et à vernir en pieds carré (supérieur à 0) : ");
-            surfacePlancher = Clavier.lireDouble();
+            surfacePlancher = Clavier.lireDoubleLn();
 
             if (surfacePlancher <= 0) {
-                System.out.print("La surface est invalide");
+                System.out.println("La surface " + MSG_ERR);
             }
         } while (surfacePlancher <= 0);
         return surfacePlancher;
@@ -200,10 +201,10 @@ public class TP2 {
             System.out.print(" (" + ID_VERNIS_EAU + " = " + CHOIX_MENU_VER_EAU + "\n"
                     + "                                " + ID_VERNIS_HUILE + " = " + CHOIX_MENU_VER_HUILE + "\n"
                     + "                                " + ID_VERNIS_ALCOOL + " = " + CHOIX_MENU_VER_ALCOOL + "):  ");
-            identifiantVernis = Clavier.lireInt();
+            identifiantVernis = Clavier.lireIntLn();
 
             if (identifiantVernis < ID_VERNIS_EAU || identifiantVernis > ID_VERNIS_ALCOOL) {
-                System.out.println("L’identifiant du type de vernis est invalide!");
+                System.out.println("L’identifiant du type de vernis " + MSG_ERR);
             }
 
         } while (identifiantVernis < ID_VERNIS_EAU || identifiantVernis > ID_VERNIS_ALCOOL);
@@ -221,7 +222,7 @@ public class TP2 {
             typeVernisFinition = Clavier.lireInt();
 
             if (typeVernisFinition < ID_MAT || typeVernisFinition > ID_LUS) {
-                System.out.println("L’identifiant du type de finition est invalide!");
+                System.out.println("L’identifiant du type de finition " + MSG_ERR);
             }
 
         } while (typeVernisFinition < ID_MAT || typeVernisFinition > ID_LUS);
@@ -236,11 +237,60 @@ public class TP2 {
             reponseEscalier = Clavier.lireCharLn();
 
             if (reponseEscalier != PETIT_O && reponseEscalier != GRAND_O && reponseEscalier != PETIT_N && reponseEscalier != GRAND_N) {
-                System.out.println("La réponse est invalide!");
+                System.out.println("La réponse " + MSG_ERR);
             }
         } while (reponseEscalier != PETIT_O && reponseEscalier != GRAND_O && reponseEscalier != PETIT_N && reponseEscalier != GRAND_N);
 
         return reponseEscalier;
+    }
+
+    public static double saisieNombreMarche(){
+        if (reponseEscalier == PETIT_O || reponseEscalier == GRAND_O) {
+            do {
+                System.out.print("Entrez le nombre de marches (supérieur à 0): ");
+                nbrMarches = Clavier.lireDoubleLn();
+                if (nbrMarches <= 0) {
+                    System.out.println("Le nombre de marche " + MSG_ERR);
+                }
+            } while (nbrMarches <= 0);
+        }
+        return nbrMarches;
+    }
+
+    public static double saisieNombreContremarche(){
+        if(nbrMarches > 0) {
+            do {
+                System.out.print("Entrez le nombre de contremarches (supérieur à 0): ");
+                nbrContreMarches = Clavier.lireDoubleLn();
+                if (nbrContreMarches <= 0) {
+                    System.out.println("Le nombre de contremarche " + MSG_ERR);
+                }
+            } while (nbrContreMarches <= 0);
+        }
+        return nbrContreMarches;
+    }
+
+    public static char saisieModeDePaiement(){
+        do {
+            System.out.print("Entrez le mode de paiement (C ou c = Comptant, D ou d = Débit, et R et r = Crédit): ");
+            modePaiement = Clavier.lireCharLn();
+            if (modePaiement == 'C' || modePaiement == 'c') {
+                //Comptant
+                modePaieClient = "Comptant";
+            } else if (modePaiement == 'D' || modePaiement == 'd') {
+                //Débit
+                modePaieClient = "Débit";
+            } else if (modePaiement == 'R' || modePaiement == 'r') {
+                //Crédit
+                modePaieClient = "Crédit";
+            } else {
+                //entrée incorecte (message d'erreur)
+                System.out.println("L'identifiant du mode de paiement " + MSG_ERR);
+            }
+
+        } while (modePaiement != 'C' && modePaiement != 'c' && modePaiement != 'D' && modePaiement != 'd' && modePaiement != 'R' && modePaiement != 'r');
+
+        return modePaiement;
     }
 
     public static void main(String[] params) {
@@ -324,51 +374,11 @@ public class TP2 {
 
                 reponseEscalier = saisieQuestionEscalier();
 
-                nbrMarches = 0;
-                nbrContreMarches = 0;
+                nbrMarches = saisieNombreMarche();
 
-                if (reponseEscalier == PETIT_O || reponseEscalier == GRAND_O) {
-                    do {
-                        System.out.print("Entrez le nombre de marches (supérieur à 0): ");
-                        nbrMarches = Clavier.lireDouble();
-                        if (nbrMarches <= 0) {
-                            System.out.print(MSG_ERR);
-                        }
-                    } while (nbrMarches <= 0);
+                nbrContreMarches = saisieNombreContremarche();
 
-                    do {
-                        System.out.print("Entrez le nombre de contremarches (supérieur à 0): ");
-                        nbrContreMarches = Clavier.lireDouble();
-                        if (nbrContreMarches <= 0) {
-                            System.out.println(MSG_ERR);
-                        }
-                    } while (nbrContreMarches <= 0);
-                }
-
-                //Saisie mode paiement
-                String modePaieClient;
-                modePaieClient = " ";
-
-                do {
-                    System.out.print("Entrez le mode de paiement (C ou c = Comptant, D ou d = Débit, et R et r = Crédit): ");
-                    modePaiement = Clavier.lireCharLn();
-                    if (modePaiement == 'C' || modePaiement == 'c') {
-                        //Comptant
-                        modePaieClient = "Comptant";
-                    } else if (modePaiement == 'D' || modePaiement == 'd') {
-                        //Débit
-                        modePaieClient = "Débit";
-                    } else if (modePaiement == 'R' || modePaiement == 'r') {
-                        //Crédit
-                        modePaieClient = "Crédit";
-                    } else {
-                        //entrée incorecte (message d'erreur)
-                        System.out.println(MSG_ERR);
-                    }
-
-                } while (modePaiement != 'C' && modePaiement != 'c' && modePaiement != 'D' && modePaiement != 'd' && modePaiement != 'R' && modePaiement != 'r');
-
-                //Calculer no Facture pour l'afficher dans menu 1 et pouvoir l'additionner dans menu 3
+                modePaiement = saisieModeDePaiement();
 
                 //Affichage Date et Heure
                 System.out.println("---------------------------------------------------------------------------------------");
