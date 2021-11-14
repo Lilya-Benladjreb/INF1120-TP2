@@ -29,13 +29,13 @@ public class TP2 {
     static final int ID_LUS = 4;
 
     // Constantes de prix
-    final double PRIX_MARCHE = 30.00;
-    final double PRIX_CONMARCHE = 15.00;
-    final double TPS = 5.00;
-    final float TVQ = 9.975f;
-    final double PRIX_VEAU = 3.50;
-    final double PRIX_VHUILE = 3.75;
-    final double PRIX_VALCOOL = 4.00;
+    static final double PRIX_MARCHE = 30.00;
+    static final double PRIX_CONMARCHE = 15.00;
+    static final double TPS = 5.00;
+    static final float TVQ = 9.975f;
+    static final double PRIX_VEAU = 3.50;
+    static final double PRIX_VHUILE = 3.75;
+    static final double PRIX_VALCOOL = 4.00;
 
     //Constante de facture
     static final String NOM_ENTREPRISE = "Expert-Plancher";
@@ -73,21 +73,27 @@ public class TP2 {
     static int nbCar;
     static String inputTrimmed;
 
-
     //Variables client
     static String nomClient;
     static String prenomClient;
     static String telClient;
     static String adrClient;
     static String modePaieClient;
+    static double prixChoixVernisClient;
+    static double prixSurfaceClient;
+    static double prixMarchesClient;
+    static double prixContreMarchesClient;
+    static double soustotalClient;
+    static double montantTpsClient;
+    static double montantTvqClient;
     int choixEau = 0;
     int choixHuile = 0;
     int choixAlcool = 0;
 
     //Variable factures
     int numFacture = 0;
-    double montantTotalClient = 0;
-    double montantTotalFactures = 0;
+    static double montantTotalClient = 0;
+    static double montantTotalFactures = 0;
     int nbrTotalClientsEau = 0;
     int nbrTotalClientsHuile = 0;
     int nbrTotalClientsAlcool = 0;
@@ -230,7 +236,7 @@ public class TP2 {
         return typeVernisFinition;
     }
 
-    public static char saisieQuestionEscalier(){
+    public static char saisieQuestionEscalier() {
         do {
             //Saisie Escalier
             System.out.print("Avez-vous des escaliers à sabler et à vernir? (O ou o = Oui, N ou n = Non): ");
@@ -244,7 +250,8 @@ public class TP2 {
         return reponseEscalier;
     }
 
-    public static double saisieNombreMarche(){
+    public static double saisieNombreMarche() {
+        //Saisie Nombre de marche
         if (reponseEscalier == PETIT_O || reponseEscalier == GRAND_O) {
             do {
                 System.out.print("Entrez le nombre de marches (supérieur à 0): ");
@@ -257,8 +264,9 @@ public class TP2 {
         return nbrMarches;
     }
 
-    public static double saisieNombreContremarche(){
-        if(nbrMarches > 0) {
+    public static double saisieNombreContremarche() {
+        //Saisie nombre contremarche
+        if (nbrMarches > 0) {
             do {
                 System.out.print("Entrez le nombre de contremarches (supérieur à 0): ");
                 nbrContreMarches = Clavier.lireDoubleLn();
@@ -270,7 +278,8 @@ public class TP2 {
         return nbrContreMarches;
     }
 
-    public static char saisieModeDePaiement(){
+    public static char saisieModeDePaiement() {
+        //Saisie mode de paiement
         do {
             System.out.print("Entrez le mode de paiement (C ou c = Comptant, D ou d = Débit, et R et r = Crédit): ");
             modePaiement = Clavier.lireCharLn();
@@ -284,13 +293,63 @@ public class TP2 {
                 //Crédit
                 modePaieClient = "Crédit";
             } else {
-                //entrée incorecte (message d'erreur)
+                //entrée incorrecte (message d'erreur)
                 System.out.println("L'identifiant du mode de paiement " + MSG_ERR);
             }
 
         } while (modePaiement != 'C' && modePaiement != 'c' && modePaiement != 'D' && modePaiement != 'd' && modePaiement != 'R' && modePaiement != 'r');
 
         return modePaiement;
+    }
+
+    public static double determinerPrixChoixVernisClient(int identifiantVernis) {
+        //Prix Surface à vernir
+        if (identifiantVernis == ID_VERNIS_EAU) {
+            prixChoixVernisClient = PRIX_VEAU;
+        } else if (identifiantVernis == ID_VERNIS_HUILE) {
+            prixChoixVernisClient = PRIX_VHUILE;
+        } else {
+            prixChoixVernisClient = PRIX_VALCOOL;
+        }
+        return prixChoixVernisClient;
+    }
+
+    public static double calculerPrixSurfaceClient(double prixChoixVernisClient, double surfacePlancher) {
+        // Calculer le sous-total de sablage er de vernissage selon de prix par pied carre et la surface à sabler et vernir.
+        prixSurfaceClient = prixChoixVernisClient * surfacePlancher;
+        return prixSurfaceClient;
+    }
+
+    public static double calculerPrixMarchesClient(double nbrMarches) {
+        // Calculer le sous-total des marches d'escaliers à sabler et à vernir.
+        prixMarchesClient = nbrMarches * PRIX_MARCHE;
+        return prixMarchesClient;
+    }
+
+    public static double calculerPrixContremarchesClient(double nbrContreMarches) {
+        // Calculer le sous-total des contremarches d'escalier à sabler et à vernir.
+        prixContreMarchesClient = nbrContreMarches * PRIX_CONMARCHE;
+        return prixContreMarchesClient;
+    }
+
+    public static double calculerSoustotalClient(double prixSurfaceClient, double prixMarchesClient, double prixContreMarchesClient) {
+        soustotalClient = prixSurfaceClient + prixMarchesClient + prixContreMarchesClient;
+        return soustotalClient;
+    }
+
+    public static double calculerTps(double soustotalClient) {
+        montantTpsClient = soustotalClient * (TPS / 100);
+        return montantTpsClient;
+    }
+
+    public static double calculerTvq(double soustotalClient) {
+        montantTvqClient = soustotalClient * (TVQ / 100);
+        return montantTvqClient;
+    }
+
+    public static double calculerMontantTotalClient(double soustotalClient, double montantTpsClient, double montantTvqClient){
+        montantTotalClient = soustotalClient + montantTpsClient + montantTvqClient;
+        return montantTotalClient;
     }
 
     public static void main(String[] params) {
@@ -379,6 +438,21 @@ public class TP2 {
                 nbrContreMarches = saisieNombreContremarche();
 
                 modePaiement = saisieModeDePaiement();
+
+                prixChoixVernisClient = determinerPrixChoixVernisClient(identifiantVernis);
+
+                prixSurfaceClient = calculerPrixSurfaceClient(prixChoixVernisClient, surfacePlancher);
+
+                prixMarchesClient = calculerPrixMarchesClient(nbrMarches);
+
+                prixContreMarchesClient = calculerPrixContremarchesClient(nbrContreMarches);
+
+                soustotalClient = calculerSoustotalClient(prixSurfaceClient, prixMarchesClient, prixContreMarchesClient);
+
+                montantTpsClient = calculerTps(soustotalClient);
+
+                montantTvqClient = calculerTvq(soustotalClient);
+
 
                 //Affichage Date et Heure
                 System.out.println("---------------------------------------------------------------------------------------");
