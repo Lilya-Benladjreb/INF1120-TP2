@@ -39,8 +39,8 @@ public class TP2 {
 
     //Constante de facture
     static final String NOM_ENTREPRISE = "Expert-Plancher";
-    final String ADR_ENTREPRISE = "2021 boulevard Java, Informatique, QC ";
-    final String TEL_ENTREPRISE = "(438)182-1100";
+    static final String ADR_ENTREPRISE = "2021 boulevard Java, Informatique, QC ";
+    static final String TEL_ENTREPRISE = "(438)182-1100";
 
     //Constantes Messages
     static final String CHOIX_MENU_UN = "Facturer le sablage et le vernissage de plancher et d'escaliers";
@@ -55,28 +55,27 @@ public class TP2 {
     static final String FINI_SEMI_LUS = "Semi-lustré";
     static final String FINI_LUS = "Lustré";
     static final String MSG_ERR = "est invalide!";
-    final String MSG_FIN = "Merci beaucoup et passez une agréable journée!";
+    static final String MSG_FIN = "Merci beaucoup et passez une agréable journée!";
     static final char PETIT_O = 'o';
     static final char GRAND_O = 'O';
     static final char PETIT_N = 'n';
     static final char GRAND_N = 'N';
 
     //Variables Menu
-    static String inputTrimmed;
-    static int nbCar;
-
-    //Variables client
-    static double montantTvqClient;
 
 
     //Variable factures
     int numFacture = 0;
-    static double montantTotalClient = 0;
-    static double montantTotalFactures = 0;
+
+
     int nbrTotalClientsEau = 0;
     int nbrTotalClientsHuile = 0;
     int nbrTotalClientsAlcool = 0;
 
+    public static int calculerNbCaractere(String s) {
+
+        return s.trim().length();
+    }
 
     public static void afficherBienvenu() {
         // Afficher un message de bienvenu + résumé du programme
@@ -110,12 +109,12 @@ public class TP2 {
     public static String saisieNomClient() {
         // Entrer le nom de famille du Client + validation
         String nomClient;
+        int nbCar;
 
         do {
             System.out.print("Entrez le nom du client (entre 2 et 25 caractères inclusivement) : ");
             nomClient = Clavier.lireString();
-            inputTrimmed = nomClient.trim();
-            nbCar = inputTrimmed.length();
+            nbCar = calculerNbCaractere(nomClient);
 
             if (nbCar < 2 || nbCar > 25) {
                 System.out.println("Le nom " + MSG_ERR);
@@ -127,12 +126,11 @@ public class TP2 {
     public static String saisiePrenomClient() {
         // Entrer le prénom du client + validation
         String prenomClient;
-
+        int nbCar;
         do {
             System.out.print("Entrez le prénom du client (entre 2 et 25 caractères inclusivement): ");
             prenomClient = Clavier.lireString();
-            inputTrimmed = prenomClient.trim();
-            nbCar = inputTrimmed.length();
+            nbCar = calculerNbCaractere(prenomClient);
 
             if (nbCar < 2 || nbCar > 25) {
                 System.out.println("Le prénom " + MSG_ERR);
@@ -144,12 +142,12 @@ public class TP2 {
     public static String saisieNumTelClient() {
         // Entrer un numéro de telephone, verifier si non-vide, verifier format NNN NNN-NNNN
         String telClient;
+        int nbCar;
 
         do {
             System.out.print("Entrez le numéro de téléphone du client (format : NNN NNN-NNNN): ");
             telClient = Clavier.lireString();
-            inputTrimmed = telClient.trim();
-            nbCar = inputTrimmed.length();
+            nbCar = calculerNbCaractere(telClient);
 
             if (!(telClient.matches("^[\\d]{3}\\s[\\d]{3}-[\\d]{4}$"))) {
                 System.out.println("Le numéro de téléphone " + MSG_ERR);
@@ -162,12 +160,12 @@ public class TP2 {
     public static String saisieAdresseClient() {
         // Entrer l'adresse du client + validation
         String adrClient;
+        int nbCar;
 
         do {
             System.out.print("Entrez l'adresse du client (entre 10 et 80 caractères inclusivement): ");
             adrClient = Clavier.lireString();
-            inputTrimmed = adrClient.trim();
-            nbCar = inputTrimmed.length();
+            nbCar = calculerNbCaractere(adrClient);
 
             if (nbCar < 10 || nbCar > 80) {
                 System.out.println("L'adresse du client " + MSG_ERR);
@@ -251,13 +249,13 @@ public class TP2 {
         //Saisie Nombre de marche
         double nbrMarches;
 
-            do {
-                System.out.print("Entrez le nombre de marches (supérieur à 0): ");
-                nbrMarches = Clavier.lireDoubleLn();
-                if (nbrMarches <= 0) {
-                    System.out.println("Le nombre de marche " + MSG_ERR);
-                }
-            } while (nbrMarches <= 0);
+        do {
+            System.out.print("Entrez le nombre de marches (supérieur à 0): ");
+            nbrMarches = Clavier.lireDoubleLn();
+            if (nbrMarches <= 0) {
+                System.out.println("Le nombre de marche " + MSG_ERR);
+            }
+        } while (nbrMarches <= 0);
         return nbrMarches;
     }
 
@@ -266,13 +264,13 @@ public class TP2 {
 
         double nbrContreMarches;
 
-            do {
-                System.out.print("Entrez le nombre de contremarches (supérieur à 0): ");
-                nbrContreMarches = Clavier.lireDoubleLn();
-                if (nbrContreMarches <= 0) {
-                    System.out.println("Le nombre de contremarche " + MSG_ERR);
-                }
-            } while (nbrContreMarches <= 0);
+        do {
+            System.out.print("Entrez le nombre de contremarches (supérieur à 0): ");
+            nbrContreMarches = Clavier.lireDoubleLn();
+            if (nbrContreMarches <= 0) {
+                System.out.println("Le nombre de contremarche " + MSG_ERR);
+            }
+        } while (nbrContreMarches <= 0);
         return nbrContreMarches;
     }
 
@@ -281,20 +279,10 @@ public class TP2 {
         char modePaiement;
         String modePaieClient;
 
-
         do {
             System.out.print("Entrez le mode de paiement (C ou c = Comptant, D ou d = Débit, et R et r = Crédit): ");
             modePaiement = Clavier.lireCharLn();
-            if (modePaiement == 'C' || modePaiement == 'c') {
-                //Comptant
-                modePaieClient = "Comptant";
-            } else if (modePaiement == 'D' || modePaiement == 'd') {
-                //Débit
-                modePaieClient = "Débit";
-            } else if (modePaiement == 'R' || modePaiement == 'r') {
-                //Crédit
-                modePaieClient = "Crédit";
-            } else {
+            if (modePaiement != 'C' && modePaiement != 'c' && modePaiement != 'D' && modePaiement != 'd' && modePaiement != 'R' && modePaiement != 'r') {
                 //entrée incorrecte (message d'erreur)
                 System.out.println("L'identifiant du mode de paiement " + MSG_ERR);
             }
@@ -359,59 +347,97 @@ public class TP2 {
     }
 
     public static double calculerTvq(double soustotalClient) {
+        double montantTvqClient;
         //Calculer la TVQ du client
         montantTvqClient = soustotalClient * (TVQ / 100);
         return montantTvqClient;
     }
 
     public static double calculerMontantTotalClient(double soustotalClient, double montantTpsClient, double montantTvqClient) {
-
+        double montantTotalClient = 0;
         montantTotalClient = soustotalClient + montantTpsClient + montantTvqClient;
         return montantTotalClient;
     }
 
     public static double calculerMontantTotalFactures(double montantTotalClient, double montantTotalFactures) {
+        //Faire la somme des deux montants
         montantTotalFactures += montantTotalClient;
         return montantTotalFactures;
+    }
+
+    public static int incrementerNombreFactures(int numFacture) {
+        //Ajouter +1 à un numero de facture
+        numFacture++;
+        return numFacture;
+    }
+
+    public static String determinerTypeDeVernis(int identifiantVernis) {
+        String choixMenuVernis;
+        //recois ID du vernis et retourne le string approprié
+        if (identifiantVernis == ID_VERNIS_EAU) {
+            choixMenuVernis = CHOIX_MENU_VER_EAU;
+        } else if (identifiantVernis == ID_VERNIS_HUILE) {
+            choixMenuVernis = CHOIX_MENU_VER_HUILE;
+        } else {
+            choixMenuVernis = CHOIX_MENU_VER_ALCOOL;
+        }
+        return choixMenuVernis;
+    }
+
+    public static String determinerTypeDeFinition(int typeVernisFinition) {
+        String choixFinitionClient;
+
+        if (typeVernisFinition == ID_MAT) {
+            choixFinitionClient = FINI_MAT;
+        } else if (typeVernisFinition == ID_SATINE) {
+            choixFinitionClient = FINI_SAT;
+        } else if (typeVernisFinition == ID_LUS) {
+            choixFinitionClient = FINI_LUS;
+        } else {
+            choixFinitionClient = FINI_SEMI_LUS;
+        }
+
+        return choixFinitionClient;
+    }
+
+    public static String determinerModeDePaiementClient(char modePaiement) {
+        String choixModeDePaiementClient;
+
+        if (modePaiement == 'C' || modePaiement == 'c') {
+            //Comptant
+            choixModeDePaiementClient = "Comptant";
+        } else if (modePaiement == 'D' || modePaiement == 'd') {
+            //Débit
+            choixModeDePaiementClient = "Débit";
+        } else {
+            //Crédit
+            choixModeDePaiementClient = "Crédit";
+        }
+
+        return choixModeDePaiementClient;
+    }
+
+    public static int incrementerNombreClientParVernis(int idVernisCible, int idVernisSaisie, int nombreClient) {
+
+        if (idVernisCible == idVernisSaisie) {
+            nombreClient++;
+        }
+
+        return nombreClient;
     }
 
     public static void main(String[] params) {
 
 
-        //Déclarer et initialiser les constantes
-        final int ID_VERNIS_EAU = 101;
-        final int ID_VERNIS_HUILE = 102;
-        final int ID_VERNIS_ALCOOL = 103;
-        final int ID_MAT = 1;
-        final int ID_SATINE = 2;
-        final int ID_SEMI_LUS = 3;
-        final int ID_LUS = 4;
-
-        // Constantes de prix
-        final double PRIX_MARCHE = 30.00;
-        final double PRIX_CONMARCHE = 15.00;
-        final double PRIX_VEAU = 3.50;
-        final double PRIX_VHUILE = 3.75;
-        final double PRIX_VALCOOL = 4.00;
-
-        //Constante de facture
-        final String NOM_ENTREPRISE = "Expert-Plancher";
-        final String ADR_ENTREPRISE = "2021 boulevard Java, Informatique, QC ";
-        final String TEL_ENTREPRISE = "(438)182-1100";
-
-        //Constantes Messages
-        final String MSG_ERR = "Entrée invalide!\n";
-        final String MSG_FIN = "Merci beaucoup et passez une agréable journée!";
-
         //Variables Menu
         int choixMenu;
-        char modePaiement;
         char reponseEscalier;
         int identifiantVernis;
-        int typeVernisFinition;
+        int typeVernisSaisie;
         double surfacePlancher;
         double nbrMarches;
         double nbrContreMarches;
+        char modePaiement;
 
         //Variables client
         String nomClient;
@@ -425,9 +451,10 @@ public class TP2 {
         double soustotalClient;
         double montantTpsClient;
         double montantTvqClient;
-        int choixEau = 0;
-        int choixHuile = 0;
-        int choixAlcool = 0;
+        String choixFinitionClient;
+        String choixModeDePaiementClient;
+        String choixMenuVernis;
+
 
         //Variable factures
         int numFacture = 0;
@@ -456,48 +483,28 @@ public class TP2 {
                 prenomClient = saisiePrenomClient();
                 telClient = saisieNumTelClient();
                 adrClient = saisieAdresseClient();
-
-                numFacture += 1;
-
+                numFacture = incrementerNombreFactures(numFacture);
                 surfacePlancher = saisieSurfacePlancher();
-
                 identifiantVernis = saisieIdentifiantVernis();
-
-                typeVernisFinition = saisieTypeVernisFinition();
-
+                typeVernisSaisie = saisieTypeVernisFinition();
                 reponseEscalier = saisieQuestionEscalier();
-
-                if(reponseEscalier == PETIT_O || reponseEscalier == GRAND_O ){
-                    nbrMarches = saisieNombreMarche();
-                }else{
-                    nbrMarches = 0;
-                }
-
-                if (nbrMarches > 0 ){
-                    nbrContreMarches = saisieNombreContremarche();
-                }else{
-                    nbrContreMarches = 0;
-                }
-
+                nbrMarches = saisieNombreMarche();
+                nbrContreMarches = saisieNombreContremarche();
                 modePaiement = saisieModeDePaiement();
-
                 prixChoixVernisClient = determinerPrixChoixVernisClient(identifiantVernis);
-
                 prixSurfaceClient = calculerPrixSurfaceClient(prixChoixVernisClient, surfacePlancher);
-
                 prixMarchesClient = calculerPrixMarchesClient(nbrMarches);
-
                 prixContreMarchesClient = calculerPrixContremarchesClient(nbrContreMarches);
-
                 soustotalClient = calculerSoustotalClient(prixSurfaceClient, prixMarchesClient, prixContreMarchesClient);
-
                 montantTpsClient = calculerTps(soustotalClient);
-
                 montantTvqClient = calculerTvq(soustotalClient);
-
                 montantTotalClient = calculerMontantTotalClient(soustotalClient, montantTpsClient, montantTvqClient);
-
-                montantTotalFactures = calculerMontantTotalFactures(montantTotalClient,montantTotalFactures);
+                montantTotalFactures = calculerMontantTotalFactures(montantTotalClient, montantTotalFactures);
+                choixFinitionClient = determinerTypeDeFinition(typeVernisSaisie);
+                choixModeDePaiementClient = determinerModeDePaiementClient(modePaiement);
+                nbrTotalClientsAlcool = incrementerNombreClientParVernis(ID_VERNIS_ALCOOL, typeVernisSaisie, nbrTotalClientsAlcool);
+                nbrTotalClientsHuile = incrementerNombreClientParVernis(ID_VERNIS_HUILE, typeVernisSaisie, nbrTotalClientsAlcool);
+                nbrTotalClientsEau = incrementerNombreClientParVernis(ID_VERNIS_EAU, typeVernisSaisie, nbrTotalClientsAlcool);
 
                 //Affichage Date et Heure
                 System.out.println("---------------------------------------------------------------------------------------");
@@ -513,80 +520,25 @@ public class TP2 {
 
                 //Afficher choix du client
                 //type de vernis à appliquer
-                String choixVernisClient;
 
-                if (identifiantVernis == ID_VERNIS_EAU) {
-                    choixEau = 1;
-                    nbrTotalClientsEau += choixEau;
+                choixMenuVernis = determinerTypeDeVernis(identifiantVernis);
 
-                    if (typeVernisFinition == ID_MAT) {
-                        choixVernisClient = "Le vernis à base d'eau avec le fini Mat";
-                    } else if (typeVernisFinition == ID_SATINE) {
-                        choixVernisClient = "Le vernis à base d'eau avec le fini Satiné";
-                    } else if (typeVernisFinition == ID_SEMI_LUS) {
-                        choixVernisClient = "Le vernis à base d'eau avec le fini Semi-lustré";
-                    } else {
-                        choixVernisClient = "Le vernis à base d'eau avec le fini Lustré";
-                    }
+                System.out.println("Type de vernis à appliquer : " + choixMenuVernis + choixFinitionClient);
 
-                } else if (identifiantVernis == ID_VERNIS_HUILE) {
-                    choixHuile = 1;
-                    nbrTotalClientsHuile += choixHuile;
-                    if (typeVernisFinition == ID_MAT) {
-                        choixVernisClient = "Le vernis à base d'huile avec le fini Mat";
-                    } else if (typeVernisFinition == ID_SATINE) {
-                        choixVernisClient = "Le vernis à base d'huile avec le fini Satiné";
-                    } else if (typeVernisFinition == ID_SEMI_LUS) {
-                        choixVernisClient = "Le vernis à base d'huile avec le fini Semi-lustré";
-                    } else {
-                        choixVernisClient = "Le vernis à base d'huile avec le fini Lustré";
-                    }
-
-                } else {
-                    choixAlcool = 1;
-                    nbrTotalClientsAlcool += choixAlcool;
-                    if (typeVernisFinition == ID_MAT) {
-                        choixVernisClient = "Le vernis à base d'alcool avec le fini Mat";
-                    } else if (typeVernisFinition == ID_SATINE) {
-                        choixVernisClient = "Le vernis à base d'alcool avec le fini Satiné";
-                    } else if (typeVernisFinition == ID_SEMI_LUS) {
-                        choixVernisClient = "Le vernis à base d'alcool avec le fini Semi-lustré";
-                    } else {
-                        choixVernisClient = "Le vernis à base d'alcool avec le fini Lustré";
-                    }
-                }
-                System.out.println("Type de vernis à appliquer : " + choixVernisClient);
-
-                System.out.println("Mode de paiement : " + modePaiement + "\n");
+                System.out.println("Mode de paiement : " + choixModeDePaiementClient + "\n");
 
                 //Calculer les prix et les afficher
 
                 //Prix Surface à vernir
-                if (identifiantVernis == ID_VERNIS_EAU && surfacePlancher > 0) {
-                    prixSurfaceClient = surfacePlancher * PRIX_VEAU;
-                    prixChoixVernisClient = PRIX_VEAU;
-                } else if (identifiantVernis == ID_VERNIS_HUILE && surfacePlancher > 0) {
-                    prixSurfaceClient = surfacePlancher * PRIX_VHUILE;
-                    prixChoixVernisClient = PRIX_VHUILE;
-                } else {
-                    prixSurfaceClient = surfacePlancher * PRIX_VALCOOL;
-                    prixChoixVernisClient = PRIX_VALCOOL;
-                }
+
                 System.out.printf("Surface à sabler et à vernir     %.2f pied carré x %.2f$ = %.2f$ \n", surfacePlancher, prixChoixVernisClient, prixSurfaceClient);
 
 
-
                 //Prix des marches et contre-marches
-                if (reponseEscalier == PETIT_O || reponseEscalier == GRAND_O) {
-                    prixMarchesClient = nbrMarches * PRIX_MARCHE;
-                    prixContreMarchesClient = nbrContreMarches * PRIX_CONMARCHE;
 
-                    System.out.printf("Nombre de marches                %.2f x %.2f$ = %.2f$ \n", nbrMarches, PRIX_MARCHE, prixMarchesClient);
-                    System.out.printf("Nombre de contremarches          %.2f x %.2f$ = %.2f$ \n ", nbrContreMarches, PRIX_CONMARCHE, prixContreMarchesClient);
 
-                    soustotalClient = prixMarchesClient + prixContreMarchesClient;
-
-                }
+                System.out.printf("Nombre de marches                %.2f x %.2f$ = %.2f$ \n", nbrMarches, PRIX_MARCHE, prixMarchesClient);
+                System.out.printf("Nombre de contremarches          %.2f x %.2f$ = %.2f$ \n ", nbrContreMarches, PRIX_CONMARCHE, prixContreMarchesClient);
 
 
                 System.out.printf("Sous-total                      %.2f$\n", soustotalClient);
@@ -596,7 +548,6 @@ public class TP2 {
 
                 System.out.println("        -------------------------------------------------------------------           ");
                 System.out.println("                 " + MSG_FIN);
-
 
 
             } else if (choixMenu == 2) {
@@ -622,7 +573,7 @@ public class TP2 {
                         + "\n-----------------------------------------------------------------------------------------------\n");
 
                 //calculer le nombre de clients par type de vernis
-                ;
+
 
                 System.out.println("Type de vernis " + "    Nombre de clients");
                 System.out.println("****************************************\n");
@@ -640,4 +591,5 @@ public class TP2 {
         System.exit(0);
 
     } // main
-} // TP1
+
+}// TP1
