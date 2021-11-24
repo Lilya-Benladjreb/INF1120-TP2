@@ -40,7 +40,7 @@ public class TP2 {
     //Constante de facture
     static final String NOM_ENTREPRISE = "Expert-Plancher";
     static final String ADR_ENTREPRISE = "2021 boulevard Java, Informatique, QC ";
-    static final String TEL_ENTREPRISE = "(438)182-1100";
+    static final String TEL_ENTREPRISE = "(438) 182-1100";
 
     //Constantes Messages
     static final String CHOIX_MENU_UN = "Facturer le sablage et le vernissage de plancher et d'escaliers";
@@ -62,7 +62,6 @@ public class TP2 {
     static final char GRAND_N = 'N';
 
     //Variables Menu
-
 
     //Variable factures
     int numFacture = 0;
@@ -154,6 +153,9 @@ public class TP2 {
             }
 
         } while (nbCar < 1 || !(telClient.matches("^[\\d]{3}\\s[\\d]{3}-[\\d]{4}$")));
+
+        //Ajouter instructions pour que le num de téléphone affiche (514) 555-5555
+
         return telClient;
     }
 
@@ -210,6 +212,7 @@ public class TP2 {
     }
 
     public static int saisieTypeVernisFinition() {
+
         int typeVernisFinition;
 
         do {
@@ -277,7 +280,6 @@ public class TP2 {
     public static char saisieModeDePaiement() {
         //Saisie mode de paiement
         char modePaiement;
-        String modePaieClient;
 
         do {
             System.out.print("Entrez le mode de paiement (C ou c = Comptant, D ou d = Débit, et R et r = Crédit): ");
@@ -426,6 +428,107 @@ public class TP2 {
         return nombreClient;
     }
 
+    public static void afficherDate(){
+        //Affichage Date et Heure
+        Date dateHeureSysteme = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        System.out.print("Date et Heure: "+ simpleDateFormat.format(dateHeureSysteme) + "\n");
+
+    }
+
+    public static void affichageFacture(int numFacture, String nomClient, String prenomClient, String telClient,
+                                          String adrClient, double surfacePlancher, int idVernisSaisie, char reponseEscalier,
+                                          int typeDeFinitionChoisi, char modeDePaiementChoisi, double prixChoixVernisClient,
+                                          double prixSurfaceClient, double nombreMarcheSaisie, double sousTotalMarches,
+                                          double nombreContremarcheSaisie, double sousTotalContremarche, double sousTotalDuClient,
+                                          double montantTps, double montantTvq, double montantTotalFinalClient) {
+
+
+        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.println(NOM_ENTREPRISE);
+        System.out.print(ADR_ENTREPRISE + "     " + TEL_ENTREPRISE + "\n");
+        System.out.print("Facture No: " + numFacture + "       ");
+        afficherDate();
+        System.out.println("---------------------------------------------------------------------------------------");
+
+
+        //Afficher info du Client
+        String choixMenuVernis = determinerTypeDeVernis(idVernisSaisie);
+        String choixFinitionClient = determinerTypeDeFinition(typeDeFinitionChoisi);
+        String choixModeDePaiementClient = determinerModeDePaiementClient(modeDePaiementChoisi);
+
+        System.out.printf("Nom et prénom : %s %s       ", nomClient, prenomClient);
+        System.out.println("Téléphone : " + telClient);
+        System.out.println("Adresse du client : " + adrClient);
+
+        //Afficher les choix du menu
+        System.out.println("Type de vernis à appliquer : " + choixMenuVernis + choixFinitionClient);
+        System.out.println("Mode de paiement : " + choixModeDePaiementClient + "\n");
+
+        // Prix Surface à vernir
+        surfacePlancher = saisieSurfacePlancher();
+        prixChoixVernisClient = determinerPrixChoixVernisClient(idVernisSaisie);
+        prixSurfaceClient = calculerPrixSurfaceClient(prixChoixVernisClient,surfacePlancher);
+
+        System.out.printf("Surface à sabler et à vernir     %.2f pied carré x %.2f$ = %.2f$ \n", surfacePlancher, prixChoixVernisClient, prixSurfaceClient);
+
+        //Prix des marches et contre-marches
+        double nbrMarches = saisieNombreMarche();
+        double prixMarchesClient = calculerPrixMarchesClient(nbrMarches);
+        double nbrContreMarches = saisieNombreContremarche();
+        double prixContreMarchesClient = calculerPrixContremarchesClient(nbrContreMarches);
+        double soustotalClient = calculerSoustotalClient(prixSurfaceClient,prixMarchesClient,prixContreMarchesClient);
+        double montantTpsClient = calculerTps(soustotalClient);
+        double montantTvqClient = calculerTvq(soustotalClient);
+        double montantTotalClient = calculerMontantTotalClient(soustotalClient,montantTpsClient,montantTvqClient);
+
+        System.out.printf("Nombre de marches                %.2f x %.2f$ = %.2f$ \n", nbrMarches, PRIX_MARCHE, prixMarchesClient);
+        System.out.printf("Nombre de contremarches          %.2f x %.2f$ = %.2f$ \n ", nbrContreMarches, PRIX_CONMARCHE, prixContreMarchesClient);
+        System.out.printf("Sous-total                      %.2f$\n", soustotalClient);
+        System.out.printf("Montant TPS                      %.2f$\n", montantTpsClient);
+        System.out.printf("Montant TVQ                      %.2f$\n", montantTvqClient);
+        System.out.printf("Montant total                    %.2f$\n", montantTotalClient);
+
+        // fin facture
+        System.out.println("        -------------------------------------------------------------------           ");
+        System.out.println("                 " + MSG_FIN);
+
+    }
+
+    public static void afficherMontantTotalToutesFacturesConfondue(double montantTotalClient, double montantTotalFactures){
+        //Nom entreprise + date + montant total des clients
+        System.out.println("\n-----------------------------------------------------------------------------------------------\n"
+                + NOM_ENTREPRISE + "\n");
+        afficherDate();
+        System.out.println("-----------------------------------------------------------------------------------------------\n");
+
+        //calculer montant total dépensé par les clents
+        double montantTotalDesFactures = calculerMontantTotalFactures(montantTotalClient,montantTotalFactures);
+
+        System.out.printf("Le montant total de toutes les factures %.2f$", montantTotalDesFactures);
+        System.out.println("\n-----------------------------------------------------------------------------------------------\n");
+
+    }
+
+    public static void afficherCompteurClientParVernis(int nbrTotalClientsEau, int nbrTotalClientsHuile, int nbrTotalClientsAlcool){
+        System.out.println("\n-----------------------------------------------------------------------------------------------\n"
+                + NOM_ENTREPRISE + "\n");
+        afficherDate();
+        System.out.println("\n-----------------------------------------------------------------------------------------------\n");
+
+        //Afficher le nombre de clients par type de vernis
+        nbrTotalClientsAlcool = incrementerNombreClientParVernis(ID_VERNIS_ALCOOL, typeVernisSaisie, nbrTotalClientsAlcool);
+
+        System.out.println("Type de vernis " + "    Nombre de clients");
+        System.out.println("****************************************\n");
+        System.out.println("Le vernis à base d'eau      " + nbrTotalClientsEau);
+        System.out.println("Le vernis à base d'huile    " + nbrTotalClientsHuile);
+        System.out.println("Le vernis à l'alcool        " + nbrTotalClientsAlcool);
+        System.out.println("\n-----------------------------------------------------------------------------------------------\n");
+
+    }
+
+
     public static void main(String[] params) {
 
 
@@ -472,9 +575,6 @@ public class TP2 {
 
             choixMenu = saisieMenuInitial();
 
-            //Déclaration de la date et l'heure
-            Date dateHeureSysteme = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
             //option 1
 
@@ -503,91 +603,31 @@ public class TP2 {
                 choixFinitionClient = determinerTypeDeFinition(typeVernisSaisie);
                 choixModeDePaiementClient = determinerModeDePaiementClient(modePaiement);
                 nbrTotalClientsAlcool = incrementerNombreClientParVernis(ID_VERNIS_ALCOOL, typeVernisSaisie, nbrTotalClientsAlcool);
-                nbrTotalClientsHuile = incrementerNombreClientParVernis(ID_VERNIS_HUILE, typeVernisSaisie, nbrTotalClientsAlcool);
-                nbrTotalClientsEau = incrementerNombreClientParVernis(ID_VERNIS_EAU, typeVernisSaisie, nbrTotalClientsAlcool);
-
-                //Affichage Date et Heure
-                System.out.println("---------------------------------------------------------------------------------------");
-                System.out.println(NOM_ENTREPRISE);
-                System.out.print(ADR_ENTREPRISE + "     " + TEL_ENTREPRISE + "\n");
-                System.out.println("Facture No: " + numFacture + "       Date et Heure: " + simpleDateFormat.format(dateHeureSysteme));
-                System.out.println("---------------------------------------------------------------------------------------");
-
-                //Affichage info client
-                System.out.printf("Nom et prénom : %s %s       ", nomClient, prenomClient);
-                System.out.println("Téléphone : " + telClient);
-                System.out.println("Adresse du client : " + adrClient);
-
-                //Afficher choix du client
-                //type de vernis à appliquer
-
-                choixMenuVernis = determinerTypeDeVernis(identifiantVernis);
-
-                System.out.println("Type de vernis à appliquer : " + choixMenuVernis + choixFinitionClient);
-
-                System.out.println("Mode de paiement : " + choixModeDePaiementClient + "\n");
-
-                //Calculer les prix et les afficher
-
-                //Prix Surface à vernir
-
-                System.out.printf("Surface à sabler et à vernir     %.2f pied carré x %.2f$ = %.2f$ \n", surfacePlancher, prixChoixVernisClient, prixSurfaceClient);
+                nbrTotalClientsHuile = incrementerNombreClientParVernis(ID_VERNIS_HUILE, typeVernisSaisie, nbrTotalClientsHuile);
+                nbrTotalClientsEau = incrementerNombreClientParVernis(ID_VERNIS_EAU, typeVernisSaisie, nbrTotalClientsEau);
 
 
-                //Prix des marches et contre-marches
 
+                affichageFacture(numFacture, nomClient, prenomClient, telClient, adrClient,surfacePlancher,
+                                identifiantVernis, reponseEscalier, typeVernisSaisie, modePaiement, prixChoixVernisClient,
+                                prixSurfaceClient , nbrMarches, prixMarchesClient, nbrContreMarches, prixContreMarchesClient,
+                                soustotalClient, montantTpsClient, montantTvqClient,montantTotalClient);
 
-                System.out.printf("Nombre de marches                %.2f x %.2f$ = %.2f$ \n", nbrMarches, PRIX_MARCHE, prixMarchesClient);
-                System.out.printf("Nombre de contremarches          %.2f x %.2f$ = %.2f$ \n ", nbrContreMarches, PRIX_CONMARCHE, prixContreMarchesClient);
-
-
-                System.out.printf("Sous-total                      %.2f$\n", soustotalClient);
-                System.out.printf("Montant TPS                      %.2f$\n", montantTpsClient);
-                System.out.printf("Montant TVQ                      %.2f$\n", montantTvqClient);
-                System.out.printf("Montant total                    %.2f$\n", montantTotalClient);
-
-                System.out.println("        -------------------------------------------------------------------           ");
-                System.out.println("                 " + MSG_FIN);
 
 
             } else if (choixMenu == 2) {
-                //Option 2
 
-                System.out.println("\n-----------------------------------------------------------------------------------------------\n"
-                        + NOM_ENTREPRISE + "\n"
-
-                        + "Date et Heure : " + simpleDateFormat.format(dateHeureSysteme)
-                        + "\n-----------------------------------------------------------------------------------------------\n");
-
-                //calculer montant total dépensé par les clents
-                System.out.printf("Le montant total de toutes les factures %.2f$", montantTotalFactures);
-                System.out.println("\n-----------------------------------------------------------------------------------------------\n");
-
-                //option 3
+                afficherMontantTotalToutesFacturesConfondue(montantTotalClient,montantTotalFactures);
 
             } else if (choixMenu == 3) {
-                System.out.println("\n-----------------------------------------------------------------------------------------------\n"
-                        + NOM_ENTREPRISE + "\n"
 
-                        + "Date et Heure : " + simpleDateFormat.format(dateHeureSysteme)
-                        + "\n-----------------------------------------------------------------------------------------------\n");
-
-                //calculer le nombre de clients par type de vernis
-
-
-                System.out.println("Type de vernis " + "    Nombre de clients");
-                System.out.println("****************************************\n");
-                System.out.println("Le vernis à base d'eau      " + nbrTotalClientsEau);
-                System.out.println("Le vernis à base d'huile    " + nbrTotalClientsHuile);
-                System.out.println("Le vernis à l'alcool        " + nbrTotalClientsAlcool);
-                System.out.println("\n-----------------------------------------------------------------------------------------------\n");
 
             } else if (choixMenu < 1 || choixMenu > 4) {
                 System.out.println(MSG_ERR);
 
             }
         } while (choixMenu != 4);
-
+        System.out.println(MSG_FIN);
         System.exit(0);
 
     } // main
